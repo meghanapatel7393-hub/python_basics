@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path 1 – Lesson 9 | Dunder Methods & Operator Overloading</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .warning {
+        background: #fff7ed;
+        padding: 12px;
+        border-left: 5px solid #ea580c;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+        overflow-x: auto;
+      }
+      ul,
+      ol {
+        margin-left: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #d1d5db;
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background-color: #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 1: Python Interview Preparation</h1>
+      <h2>Phase 1 – Core Python</h2>
+      <h3>Lesson 9: Dunder Methods & Operator Overloading</h3>
+
+      <div class="section">
+        <h2>1. What are Dunder Methods?</h2>
+        <p>
+          <strong>Dunder methods</strong> (double underscore methods) are
+          special methods in Python that start and end with <code>__</code>.
+        </p>
+
+        <div class="note">
+          Interview line:<br />
+          “Dunder methods allow us to define the behavior of objects for
+          built-in operations.”
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. Common Dunder Methods</h2>
+
+        <table>
+          <tr>
+            <th>Method</th>
+            <th>Purpose</th>
+          </tr>
+          <tr>
+            <td>__init__</td>
+            <td>Constructor</td>
+          </tr>
+          <tr>
+            <td>__str__</td>
+            <td>Readable string representation</td>
+          </tr>
+          <tr>
+            <td>__repr__</td>
+            <td>Official representation</td>
+          </tr>
+          <tr>
+            <td>__len__</td>
+            <td>Length of object</td>
+          </tr>
+          <tr>
+            <td>__add__</td>
+            <td>Addition operator</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>3. __str__ vs __repr__</h2>
+
+        <div class="code">
+          class User:<br />
+          &nbsp;&nbsp;def __init__(self, name):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;self.name = name<br /><br />
+          &nbsp;&nbsp;def __str__(self):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return f"User: {self.name}"<br /><br />
+          &nbsp;&nbsp;def __repr__(self):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return f"User('{self.name}')"
+        </div>
+
+        <div class="note">
+          __str__ → for users<br />
+          __repr__ → for developers
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. __len__ Example</h2>
+
+        <div class="code">
+          class Cart:<br />
+          &nbsp;&nbsp;def __init__(self, items):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;self.items = items<br /><br />
+          &nbsp;&nbsp;def __len__(self):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return len(self.items)
+        </div>
+
+        <div class="code">
+          cart = Cart([1, 2, 3])<br />
+          print(len(cart))
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. Operator Overloading</h2>
+        <p>
+          Operator overloading allows operators to behave differently for custom
+          objects.
+        </p>
+
+        <div class="code">
+          class Point:<br />
+          &nbsp;&nbsp;def __init__(self, x, y):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;self.x = x<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;self.y = y<br /><br />
+          &nbsp;&nbsp;def __add__(self, other):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return Point(self.x + other.x, self.y +
+          other.y)
+        </div>
+
+        <div class="code">
+          p1 = Point(2, 3)<br />
+          p2 = Point(4, 5)<br />
+          p3 = p1 + p2<br />
+          print(p3.x, p3.y)
+        </div>
+
+        <div class="note">
+          <code>+</code> uses <code>__add__</code> internally.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>6. Common Operator Overloading Methods</h2>
+
+        <table>
+          <tr>
+            <th>Operator</th>
+            <th>Method</th>
+          </tr>
+          <tr>
+            <td>+</td>
+            <td>__add__</td>
+          </tr>
+          <tr>
+            <td>-</td>
+            <td>__sub__</td>
+          </tr>
+          <tr>
+            <td>*</td>
+            <td>__mul__</td>
+          </tr>
+          <tr>
+            <td>/</td>
+            <td>__truediv__</td>
+          </tr>
+          <tr>
+            <td>==</td>
+            <td>__eq__</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="warning">
+        Overuse of operator overloading can reduce code readability.
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Create a class with __str__ method</li>
+          <li>Overload + operator for two objects</li>
+          <li>Implement __len__ for a custom class</li>
+          <li>Explain __repr__ in interview</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          <strong>What happens when we do obj1 + obj2?</strong> “Python
+          internally calls the __add__ method of the object.”
+        </p>
+        <p>
+          <strong>Lesson 10:</strong> Modules, Packages & Virtual Environments
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

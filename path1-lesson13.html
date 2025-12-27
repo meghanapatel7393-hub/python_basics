@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>
+      Path 1 – Lesson 13 | Context Managers & Advanced File Handling
+    </title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .warning {
+        background: #fff7ed;
+        padding: 12px;
+        border-left: 5px solid #ea580c;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+        overflow-x: auto;
+      }
+      ul,
+      ol {
+        margin-left: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #d1d5db;
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background-color: #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 1: Python Interview Preparation</h1>
+      <h2>Phase 1 – Core Python</h2>
+      <h3>Lesson 13: Context Managers & Advanced File Handling</h3>
+
+      <div class="section">
+        <h2>1. File Handling Basics</h2>
+        <p>
+          Python allows you to read and write files using <code>open()</code>.
+        </p>
+
+        <div class="code">
+          # Open a file in read mode<br />
+          f = open("example.txt", "r")<br />
+          content = f.read()<br />
+          f.close()
+        </div>
+
+        <div class="note">Always close the file to free resources.</div>
+      </div>
+
+      <div class="section">
+        <h2>2. Context Managers</h2>
+        <p>
+          Context managers simplify file handling and automatically close the
+          file.
+        </p>
+
+        <div class="code">
+          with open("example.txt", "r") as f:<br />
+          &nbsp;&nbsp;content = f.read()<br />
+          print(content)
+        </div>
+
+        <div class="note">
+          The <code>with</code> statement ensures the file is closed even if an
+          error occurs.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. Writing to a File</h2>
+
+        <div class="code">
+          with open("output.txt", "w") as f:<br />
+          &nbsp;&nbsp;f.write("Hello Bhavesh!")
+        </div>
+
+        <div class="note">
+          Modes: <code>r</code>, <code>w</code>, <code>a</code>,
+          <code>rb</code>, <code>wb</code>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. Reading Lines</h2>
+
+        <div class="code">
+          with open("example.txt", "r") as f:<br />
+          &nbsp;&nbsp;for line in f:<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print(line.strip())
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. File Handling Methods</h2>
+
+        <table>
+          <tr>
+            <th>Method</th>
+            <th>Purpose</th>
+          </tr>
+          <tr>
+            <td>read()</td>
+            <td>Read entire file</td>
+          </tr>
+          <tr>
+            <td>readline()</td>
+            <td>Read one line</td>
+          </tr>
+          <tr>
+            <td>readlines()</td>
+            <td>Return all lines as a list</td>
+          </tr>
+          <tr>
+            <td>write()</td>
+            <td>Write to file</td>
+          </tr>
+          <tr>
+            <td>writelines()</td>
+            <td>Write multiple lines</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>6. Custom Context Managers</h2>
+
+        <div class="code">
+          class FileManager:<br />
+          &nbsp;&nbsp;def __init__(self, filename, mode):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;self.filename = filename<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;self.mode = mode<br /><br />
+          &nbsp;&nbsp;def __enter__(self):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;self.file = open(self.filename, self.mode)<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return self.file<br /><br />
+          &nbsp;&nbsp;def __exit__(self, exc_type, exc_val, exc_tb):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;self.file.close()
+        </div>
+
+        <div class="code">
+          with FileManager("output.txt", "w") as f:<br />
+          &nbsp;&nbsp;f.write("Hello from custom context manager!")
+        </div>
+
+        <div class="note">
+          Implements <code>__enter__</code> and <code>__exit__</code> methods.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>7. File Handling Tips</h2>
+        <ul>
+          <li>Always use context managers to prevent file leaks</li>
+          <li>Use <code>with open()</code> for safer code</li>
+          <li>Handle exceptions for production code</li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Read a file line by line</li>
+          <li>Write multiple lines to a file</li>
+          <li>Create a custom context manager class</li>
+          <li>Explain <code>with</code> usage in interview</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          “Always use context managers to ensure files are closed properly, even
+          when exceptions occur.”
+        </p>
+        <p><strong>Lesson 14:</strong> Regular Expressions (Regex) in Python</p>
+      </div>
+    </div>
+  </body>
+</html>

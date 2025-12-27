@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path 1 – Lesson 10 | Modules, Packages & Virtual Environments</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .warning {
+        background: #fff7ed;
+        padding: 12px;
+        border-left: 5px solid #ea580c;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+        overflow-x: auto;
+      }
+      ul,
+      ol {
+        margin-left: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #d1d5db;
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background-color: #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 1: Python Interview Preparation</h1>
+      <h2>Phase 1 – Core Python</h2>
+      <h3>Lesson 10: Modules, Packages & Virtual Environments</h3>
+
+      <div class="section">
+        <h2>1. What is a Module?</h2>
+        <p>
+          A <strong>module</strong> is a Python file containing functions,
+          variables, or classes.
+        </p>
+
+        <div class="code">
+          # math_utils.py<br />
+          def add(a, b):<br />
+          &nbsp;&nbsp;return a + b
+        </div>
+
+        <div class="code">
+          import math_utils<br />
+          print(math_utils.add(2, 3))
+        </div>
+
+        <div class="note">
+          Interview line:<br />
+          “A module is a single Python file used to organize code.”
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. Types of Modules</h2>
+        <ul>
+          <li>Built-in modules (math, sys, os)</li>
+          <li>User-defined modules</li>
+          <li>Third-party modules</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>3. Import Statements</h2>
+
+        <div class="code">
+          import math<br />
+          print(math.sqrt(16))
+        </div>
+
+        <div class="code">
+          from math import sqrt<br />
+          print(sqrt(25))
+        </div>
+
+        <div class="code">
+          import math as m<br />
+          print(m.pi)
+        </div>
+
+        <div class="warning">
+          Avoid <code>from module import *</code> in production.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. What is a Package?</h2>
+        <p>
+          A <strong>package</strong> is a folder containing multiple modules.
+        </p>
+
+        <div class="code">
+          mypackage/<br />
+          │── __init__.py<br />
+          │── file1.py<br />
+          │── file2.py
+        </div>
+
+        <div class="note">Packages help structure large applications.</div>
+      </div>
+
+      <div class="section">
+        <h2>5. __init__.py</h2>
+        <p><code>__init__.py</code> marks a directory as a Python package.</p>
+
+        <div class="note">
+          It can also execute package-level initialization code.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>6. Virtual Environment (venv)</h2>
+        <p>
+          A virtual environment is an isolated Python environment for
+          project-specific dependencies.
+        </p>
+
+        <div class="code">python -m venv venv</div>
+
+        <div class="code">
+          # Activate (Windows)<br />
+          venv\Scripts\activate
+        </div>
+
+        <div class="code">
+          # Activate (Mac/Linux)<br />
+          source venv/bin/activate
+        </div>
+
+        <div class="note">Prevents dependency conflicts.</div>
+      </div>
+
+      <div class="section">
+        <h2>7. pip & Requirements</h2>
+
+        <div class="code">pip install requests</div>
+
+        <div class="code">pip freeze > requirements.txt</div>
+
+        <div class="code">pip install -r requirements.txt</div>
+
+        <div class="note">Used for project dependency management.</div>
+      </div>
+
+      <div class="section">
+        <h2>8. Interview Comparison</h2>
+
+        <table>
+          <tr>
+            <th>Concept</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>Module</td>
+            <td>Single Python file</td>
+          </tr>
+          <tr>
+            <td>Package</td>
+            <td>Collection of modules</td>
+          </tr>
+          <tr>
+            <td>venv</td>
+            <td>Isolated environment</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Create your own module</li>
+          <li>Create a package with 2 modules</li>
+          <li>Create and activate virtual environment</li>
+          <li>Explain venv importance in interview</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          <strong>Why use virtual environments?</strong> “To isolate
+          dependencies and avoid version conflicts between projects.”
+        </p>
+        <p>
+          <strong>Lesson 11:</strong> Iterators, Generators (Advanced Internals)
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

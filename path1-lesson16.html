@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path 1 – Lesson 16 | Asyncio & Event Loop</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .warning {
+        background: #fff7ed;
+        padding: 12px;
+        border-left: 5px solid #ea580c;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+        overflow-x: auto;
+      }
+      ul,
+      ol {
+        margin-left: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #d1d5db;
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background-color: #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 1: Python Interview Preparation</h1>
+      <h2>Phase 1 – Core Python</h2>
+      <h3>Lesson 16: Asyncio & Event Loop</h3>
+
+      <div class="section">
+        <h2>1. What is Asyncio?</h2>
+        <p>
+          Asyncio is Python’s library to write concurrent code using the
+          <strong>async/await</strong> syntax. Useful for I/O-bound tasks like
+          network requests, file operations, or database queries.
+        </p>
+
+        <div class="note">
+          Asyncio allows tasks to run asynchronously without blocking the main
+          program.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. Event Loop</h2>
+        <p>Event loop manages and schedules asynchronous tasks in asyncio.</p>
+
+        <div class="code">
+          import asyncio<br /><br />
+          async def say_hello():<br />
+          &nbsp;&nbsp;print("Hello")<br /><br />
+          asyncio.run(say_hello())
+        </div>
+
+        <div class="note">
+          <code>asyncio.run()</code> starts the event loop and executes the
+          coroutine.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. Async Functions</h2>
+
+        <div class="code">
+          async def greet(name):<br />
+          &nbsp;&nbsp;await asyncio.sleep(1)<br />
+          &nbsp;&nbsp;print(f"Hello {name}")<br /><br />
+          async def main():<br />
+          &nbsp;&nbsp;await asyncio.gather(greet("Bhavesh"), greet("Alice"))<br /><br />
+          asyncio.run(main())
+        </div>
+
+        <div class="note">
+          <code>await</code> pauses coroutine until the awaited task completes.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. asyncio.gather</h2>
+        <p>Runs multiple coroutines concurrently.</p>
+
+        <div class="code">
+          async def task1():<br />
+          &nbsp;&nbsp;await asyncio.sleep(1)<br />
+          &nbsp;&nbsp;print("Task 1 done")<br /><br />
+          async def task2():<br />
+          &nbsp;&nbsp;await asyncio.sleep(2)<br />
+          &nbsp;&nbsp;print("Task 2 done")<br /><br />
+          async def main():<br />
+          &nbsp;&nbsp;await asyncio.gather(task1(), task2())<br /><br />
+          asyncio.run(main())
+        </div>
+
+        <div class="note">
+          Both tasks run concurrently, saving total execution time.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. asyncio.sleep vs time.sleep</h2>
+
+        <table>
+          <tr>
+            <th>Function</th>
+            <th>Behavior</th>
+          </tr>
+          <tr>
+            <td>time.sleep()</td>
+            <td>Blocks the whole program</td>
+          </tr>
+          <tr>
+            <td>asyncio.sleep()</td>
+            <td>Non-blocking, allows other tasks to run</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>6. Practical Example – Fetch URLs</h2>
+
+        <div class="code">
+          import asyncio<br />
+          import aiohttp<br /><br />
+          async def fetch(url):<br />
+          &nbsp;&nbsp;async with aiohttp.ClientSession() as session:<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;async with session.get(url) as resp:<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(await resp.text())<br /><br />
+          asyncio.run(fetch("https://example.com"))
+        </div>
+
+        <div class="note">
+          Shows async network requests using aiohttp library.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>7. Key Tips</h2>
+        <ul>
+          <li>Use asyncio for I/O-bound tasks, not CPU-bound</li>
+          <li>Always await coroutines</li>
+          <li>
+            Use <code>asyncio.gather()</code> to run multiple coroutines
+            concurrently
+          </li>
+          <li>Do not mix blocking code inside async functions</li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Create async function printing numbers with delay</li>
+          <li>Use asyncio.gather to run 2 coroutines concurrently</li>
+          <li>Explain difference between async/await and threading</li>
+          <li>Fetch data from 2 websites concurrently using aiohttp</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Asyncio allows writing non-blocking I/O code efficiently, making
+          Python suitable for high-performance network applications.
+        </p>
+        <p>
+          <strong>Lesson 17:</strong> Python OOP – Advanced Concepts
+          (Inheritance, Polymorphism, Magic Methods)
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

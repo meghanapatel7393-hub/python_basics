@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path 1 – Lesson 14 | Regular Expressions (Regex)</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .warning {
+        background: #fff7ed;
+        padding: 12px;
+        border-left: 5px solid #ea580c;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+        overflow-x: auto;
+      }
+      ul,
+      ol {
+        margin-left: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #d1d5db;
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background-color: #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 1: Python Interview Preparation</h1>
+      <h2>Phase 1 – Core Python</h2>
+      <h3>Lesson 14: Regular Expressions (Regex)</h3>
+
+      <div class="section">
+        <h2>1. What is Regex?</h2>
+        <p>
+          Regex (Regular Expression) is a sequence of characters that forms a
+          search pattern. Used for text searching, validation, and manipulation.
+        </p>
+
+        <div class="note">
+          Interview line:<br />
+          “Regex is widely asked for string validation and data extraction.”
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. Importing Regex Module</h2>
+
+        <div class="code">import re</div>
+      </div>
+
+      <div class="section">
+        <h2>3. Basic Regex Functions</h2>
+
+        <table>
+          <tr>
+            <th>Function</th>
+            <th>Purpose</th>
+          </tr>
+          <tr>
+            <td>re.match()</td>
+            <td>Match pattern at the beginning of string</td>
+          </tr>
+          <tr>
+            <td>re.search()</td>
+            <td>Search pattern anywhere in string</td>
+          </tr>
+          <tr>
+            <td>re.findall()</td>
+            <td>Return all occurrences of pattern</td>
+          </tr>
+          <tr>
+            <td>re.split()</td>
+            <td>Split string by pattern</td>
+          </tr>
+          <tr>
+            <td>re.sub()</td>
+            <td>Replace pattern with another string</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>4. Basic Patterns</h2>
+
+        <ul>
+          <li><code>abc</code> – Matches literal "abc"</li>
+          <li><code>^</code> – Start of string</li>
+          <li><code>$</code> – End of string</li>
+          <li><code>.</code> – Any character except newline</li>
+          <li><code>*</code> – 0 or more repetitions</li>
+          <li><code>+</code> – 1 or more repetitions</li>
+          <li><code>?</code> – 0 or 1 repetition</li>
+          <li><code>[a-z]</code> – Any lowercase letter</li>
+          <li><code>\d</code> – Digit (0-9)</li>
+          <li><code>\w</code> – Word character (a-z, A-Z, 0-9, _)</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>5. Examples</h2>
+
+        <div class="code">
+          import re<br />
+          pattern = r"\d+" # Matches 1 or more digits<br />
+          text = "My number is 12345"<br />
+          result = re.findall(pattern, text)<br />
+          print(result) # Output: ['12345']
+        </div>
+
+        <div class="code">
+          # Email validation<br />
+          pattern = r"^[\w\.-]+@[\w\.-]+\.\w+$"<br />
+          text = "test@example.com"<br />
+          if re.match(pattern, text):<br />
+          &nbsp;&nbsp;print("Valid email")<br />
+          else:<br />
+          &nbsp;&nbsp;print("Invalid email")
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>6. Compiling Patterns</h2>
+
+        <div class="code">
+          pattern = re.compile(r"\d+")<br />
+          result = pattern.findall("There are 12 cats and 5 dogs")<br />
+          print(result) # ['12', '5']
+        </div>
+
+        <div class="note">
+          Compiling improves performance if pattern is used multiple times.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>7. Regex Tips</h2>
+        <ul>
+          <li>Use raw string <code>r"pattern"</code> to avoid escape issues</li>
+          <li>Always test your regex patterns</li>
+          <li>Use <code>re.VERBOSE</code> for complex patterns</li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Extract all numbers from a string</li>
+          <li>Validate email addresses</li>
+          <li>Split text by commas using regex</li>
+          <li>Replace all digits with "#" in a string</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          “Regex is powerful for text validation, extraction, and manipulation.
+          Always use raw strings (r"pattern") to avoid escape issues.
+        </p>
+        <p>
+          <strong>Lesson 15:</strong> Python Multithreading & Multiprocessing
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

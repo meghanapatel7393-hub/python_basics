@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path 1 – Lesson 12 | Decorators</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .warning {
+        background: #fff7ed;
+        padding: 12px;
+        border-left: 5px solid #ea580c;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+        overflow-x: auto;
+      }
+      ul,
+      ol {
+        margin-left: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #d1d5db;
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background-color: #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 1: Python Interview Preparation</h1>
+      <h2>Phase 1 – Core Python</h2>
+      <h3>Lesson 12: Decorators</h3>
+
+      <div class="section">
+        <h2>1. What is a Decorator?</h2>
+        <p>
+          A <strong>decorator</strong> is a function that takes another function
+          and extends its behavior without explicitly modifying it.
+        </p>
+
+        <div class="note">
+          Interview line:<br />
+          “Decorators help in code reusability and applying cross-cutting
+          concerns like logging.”
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. Simple Decorator Example</h2>
+
+        <div class="code">
+          def decorator(func):<br />
+          &nbsp;&nbsp;def wrapper():<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print("Before function")<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;func()<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print("After function")<br />
+          &nbsp;&nbsp;return wrapper<br /><br />
+          @decorator<br />
+          def say_hello():<br />
+          &nbsp;&nbsp;print("Hello World")<br /><br />
+          say_hello()
+        </div>
+
+        <div class="note">
+          <code>@decorator</code> is syntactic sugar for
+          <code>say_hello = decorator(say_hello)</code>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. Decorators with Arguments</h2>
+
+        <div class="code">
+          def decorator(func):<br />
+          &nbsp;&nbsp;def wrapper(name):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print("Before function")<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;func(name)<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print("After function")<br />
+          &nbsp;&nbsp;return wrapper<br /><br />
+          @decorator<br />
+          def greet(name):<br />
+          &nbsp;&nbsp;print(f"Hello {name}")<br /><br />
+          greet("Bhavesh")
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. Chaining Decorators</h2>
+
+        <div class="code">
+          def deco1(func):<br />
+          &nbsp;&nbsp;def wrapper():<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print("Deco1")<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;func()<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return<br />
+          &nbsp;&nbsp;return wrapper<br /><br />
+          def deco2(func):<br />
+          &nbsp;&nbsp;def wrapper():<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print("Deco2")<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;func()<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return<br />
+          &nbsp;&nbsp;return wrapper<br /><br />
+          @deco1<br />
+          @deco2<br />
+          def hello():<br />
+          &nbsp;&nbsp;print("Hello")<br /><br />
+          hello()
+        </div>
+
+        <div class="note">Executes inside-out: deco2 → deco1 → hello</div>
+      </div>
+
+      <div class="section">
+        <h2>5. Built-in Decorators</h2>
+
+        <ul>
+          <li>
+            <code>@staticmethod</code> – Function inside class without self
+          </li>
+          <li><code>@classmethod</code> – Receives class instead of object</li>
+          <li><code>@property</code> – Access method like attribute</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>6. Why Use Decorators?</h2>
+        <ul>
+          <li>Logging</li>
+          <li>Authentication & Authorization</li>
+          <li>Timing functions</li>
+          <li>Code reusability & clean code</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>7. Interview Comparison</h2>
+
+        <table>
+          <tr>
+            <th>Concept</th>
+            <th>Use</th>
+          </tr>
+          <tr>
+            <td>Decorator</td>
+            <td>Extend behavior of function/class</td>
+          </tr>
+          <tr>
+            <td>@staticmethod</td>
+            <td>Class method without self</td>
+          </tr>
+          <tr>
+            <td>@classmethod</td>
+            <td>Method receives class instead of instance</td>
+          </tr>
+          <tr>
+            <td>@property</td>
+            <td>Method acts like attribute</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Create a simple decorator</li>
+          <li>Create decorator with arguments</li>
+          <li>Chain two decorators</li>
+          <li>Use @staticmethod and @classmethod</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Decorators allow separation of concerns and dynamic behavior
+          enhancement without modifying the original function.
+        </p>
+        <p>
+          <strong>Lesson 13:</strong> Context Managers & Advanced File Handling
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

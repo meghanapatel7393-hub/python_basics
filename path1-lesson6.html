@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path 1 – Lesson 6 | File Handling & Context Managers</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .warning {
+        background: #fff7ed;
+        padding: 12px;
+        border-left: 5px solid #ea580c;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+        overflow-x: auto;
+      }
+      ul,
+      ol {
+        margin-left: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #d1d5db;
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background-color: #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 1: Python Interview Preparation</h1>
+      <h2>Phase 1 – Core Python</h2>
+      <h3>Lesson 6: File Handling & Context Managers</h3>
+
+      <div class="section">
+        <h2>1. What is File Handling?</h2>
+        <p>
+          File handling allows Python programs to
+          <strong>read, write, update, and delete</strong> files.
+        </p>
+
+        <div class="note">
+          Interview line:<br />
+          “File handling is used to persist data permanently.”
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. Opening a File</h2>
+
+        <div class="code">file = open("data.txt", "r")</div>
+
+        <table>
+          <tr>
+            <th>Mode</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>r</td>
+            <td>Read (default)</td>
+          </tr>
+          <tr>
+            <td>w</td>
+            <td>Write (overwrite)</td>
+          </tr>
+          <tr>
+            <td>a</td>
+            <td>Append</td>
+          </tr>
+          <tr>
+            <td>r+</td>
+            <td>Read + Write</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>3. Reading from a File</h2>
+
+        <div class="code">
+          file = open("data.txt", "r")<br />
+          print(file.read())<br />
+          file.close()
+        </div>
+
+        <div class="code">
+          file = open("data.txt", "r")<br />
+          print(file.readline())
+        </div>
+
+        <div class="code">
+          file = open("data.txt", "r")<br />
+          print(file.readlines())
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. Writing to a File</h2>
+
+        <div class="code">
+          file = open("data.txt", "w")<br />
+          file.write("Hello Python")<br />
+          file.close()
+        </div>
+
+        <div class="warning">Write mode overwrites existing content.</div>
+      </div>
+
+      <div class="section">
+        <h2>5. Appending to a File</h2>
+
+        <div class="code">
+          file = open("data.txt", "a")<br />
+          file.write("\nNew line added")<br />
+          file.close()
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>6. Why Close a File?</h2>
+        <ul>
+          <li>Free system resources</li>
+          <li>Prevent data corruption</li>
+          <li>Ensure data is saved</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>7. Context Manager (<code>with</code> Statement)</h2>
+
+        <p>
+          The <code>with</code> statement automatically handles file closing.
+        </p>
+
+        <div class="code">
+          with open("data.txt", "r") as file:<br />
+          &nbsp;&nbsp;print(file.read())
+        </div>
+
+        <div class="note">Best practice for file handling.</div>
+      </div>
+
+      <div class="section">
+        <h2>8. File Handling with Exception Safety</h2>
+
+        <div class="code">
+          try:<br />
+          &nbsp;&nbsp;with open("data.txt", "r") as file:<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print(file.read())<br />
+          except FileNotFoundError:<br />
+          &nbsp;&nbsp;print("File not found")
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>9. Interview Comparison</h2>
+
+        <table>
+          <tr>
+            <th>Approach</th>
+            <th>Manual</th>
+            <th>with Statement</th>
+          </tr>
+          <tr>
+            <td>Close file</td>
+            <td>Required</td>
+            <td>Automatic</td>
+          </tr>
+          <tr>
+            <td>Exception safe</td>
+            <td>No</td>
+            <td>Yes</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Create a file and write your name</li>
+          <li>Append current date</li>
+          <li>Read file using <code>with</code></li>
+          <li>Explain file modes in interview</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          <strong>“Why is with preferred?”</strong> “It ensures proper resource
+          management and prevents memory leaks.”
+        </p>
+        <p>
+          <strong>Lesson 7:</strong> OOP Basics – Class, Object, Constructor
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

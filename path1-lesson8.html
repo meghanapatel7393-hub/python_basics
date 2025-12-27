@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path 1 – Lesson 8 | OOP Pillars</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .warning {
+        background: #fff7ed;
+        padding: 12px;
+        border-left: 5px solid #ea580c;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+        overflow-x: auto;
+      }
+      ul,
+      ol {
+        margin-left: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #d1d5db;
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background-color: #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 1: Python Interview Preparation</h1>
+      <h2>Phase 1 – Core Python</h2>
+      <h3>Lesson 8: OOP Pillars</h3>
+
+      <div class="section">
+        <h2>1. Four Pillars of OOP</h2>
+        <ul>
+          <li>Inheritance</li>
+          <li>Polymorphism</li>
+          <li>Encapsulation</li>
+          <li>Abstraction</li>
+        </ul>
+
+        <div class="note">
+          Interview line:<br />
+          “OOP is based on four pillars: inheritance, polymorphism,
+          encapsulation, and abstraction.”
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. Inheritance</h2>
+        <p>
+          Inheritance allows one class (child) to reuse properties and methods
+          of another class (parent).
+        </p>
+
+        <div class="code">
+          class Animal:<br />
+          &nbsp;&nbsp;def speak(self):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print("Animal speaks")<br /><br />
+          class Dog(Animal):<br />
+          &nbsp;&nbsp;def bark(self):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print("Dog barks")
+        </div>
+
+        <div class="note">Promotes code reusability.</div>
+      </div>
+
+      <div class="section">
+        <h2>3. Types of Inheritance</h2>
+        <ul>
+          <li>Single</li>
+          <li>Multiple</li>
+          <li>Multilevel</li>
+          <li>Hierarchical</li>
+          <li>Hybrid</li>
+        </ul>
+
+        <div class="warning">Python supports multiple inheritance.</div>
+      </div>
+
+      <div class="section">
+        <h2>4. Polymorphism</h2>
+        <p>Polymorphism means “many forms”.</p>
+
+        <div class="code">
+          class Bird:<br />
+          &nbsp;&nbsp;def fly(self):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print("Bird flies")<br /><br />
+          class Sparrow(Bird):<br />
+          &nbsp;&nbsp;def fly(self):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print("Sparrow flies fast")
+        </div>
+
+        <div class="note">Same method name, different behavior.</div>
+      </div>
+
+      <div class="section">
+        <h2>5. Encapsulation</h2>
+        <p>
+          Encapsulation means wrapping data and methods together and restricting
+          access.
+        </p>
+
+        <div class="code">
+          class BankAccount:<br />
+          &nbsp;&nbsp;def __init__(self, balance):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;self.__balance = balance<br /><br />
+          &nbsp;&nbsp;def get_balance(self):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return self.__balance
+        </div>
+
+        <div class="note">Double underscore makes variable private.</div>
+      </div>
+
+      <div class="section">
+        <h2>6. Abstraction</h2>
+        <p>
+          Abstraction hides implementation details and shows only essential
+          features.
+        </p>
+
+        <div class="code">
+          from abc import ABC, abstractmethod<br /><br />
+          class Vehicle(ABC):<br />
+          &nbsp;&nbsp;@abstractmethod<br />
+          &nbsp;&nbsp;def start(self):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;pass
+        </div>
+
+        <div class="code">
+          class Car(Vehicle):<br />
+          &nbsp;&nbsp;def start(self):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print("Car starts")
+        </div>
+
+        <div class="note">Abstract classes cannot be instantiated.</div>
+      </div>
+
+      <div class="section">
+        <h2>7. Interview Comparison</h2>
+
+        <table>
+          <tr>
+            <th>Pillar</th>
+            <th>Purpose</th>
+          </tr>
+          <tr>
+            <td>Inheritance</td>
+            <td>Reuse code</td>
+          </tr>
+          <tr>
+            <td>Polymorphism</td>
+            <td>Flexible behavior</td>
+          </tr>
+          <tr>
+            <td>Encapsulation</td>
+            <td>Data protection</td>
+          </tr>
+          <tr>
+            <td>Abstraction</td>
+            <td>Hide complexity</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Create parent and child class</li>
+          <li>Override a method</li>
+          <li>Create a private variable</li>
+          <li>Create an abstract class</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          <strong>“Which OOP pillar is most important?”</strong> Answere : “All
+          are important; encapsulation and abstraction improve design,
+          inheritance and polymorphism improve flexibility.”
+        </p>
+        <p><strong>Lesson 9:</strong> Dunder Methods & Operator Overloading</p>
+      </div>
+    </div>
+  </body>
+</html>

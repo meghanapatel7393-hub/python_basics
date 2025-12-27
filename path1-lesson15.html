@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path 1 – Lesson 15 | Multithreading & Multiprocessing</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .warning {
+        background: #fff7ed;
+        padding: 12px;
+        border-left: 5px solid #ea580c;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+        overflow-x: auto;
+      }
+      ul,
+      ol {
+        margin-left: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #d1d5db;
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background-color: #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 1: Python Interview Preparation</h1>
+      <h2>Phase 1 – Core Python</h2>
+      <h3>Lesson 15: Multithreading & Multiprocessing</h3>
+
+      <div class="section">
+        <h2>1. Why Multithreading?</h2>
+        <p>
+          Multithreading allows Python to run multiple threads (tasks)
+          concurrently, useful for I/O bound tasks.
+        </p>
+
+        <div class="note">
+          Threads share memory space but may need synchronization for shared
+          data.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. Multithreading Example</h2>
+
+        <div class="code">
+          import threading<br />
+          <br />
+          def print_numbers():<br />
+          &nbsp;&nbsp;for i in range(5):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print(i)<br />
+          <br />
+          t1 = threading.Thread(target=print_numbers)<br />
+          t2 = threading.Thread(target=print_numbers)<br />
+          <br />
+          t1.start()<br />
+          t2.start()<br />
+          <br />
+          t1.join()<br />
+          t2.join()
+        </div>
+
+        <div class="note">
+          <code>start()</code> begins the thread, <code>join()</code> waits for
+          completion.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. Thread Synchronization</h2>
+
+        <div class="code">
+          import threading<br />
+          counter = 0<br />
+          lock = threading.Lock()<br />
+          <br />
+          def increment():<br />
+          &nbsp;&nbsp;global counter<br />
+          &nbsp;&nbsp;for _ in range(1000):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;with lock:<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter += 1
+        </div>
+
+        <div class="note">
+          Locks prevent race conditions in shared resources.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. Multiprocessing</h2>
+        <p>
+          Multiprocessing runs multiple processes in parallel, bypassing
+          Python’s GIL, useful for CPU-bound tasks.
+        </p>
+
+        <div class="code">
+          from multiprocessing import Process<br />
+          <br />
+          def print_numbers():<br />
+          &nbsp;&nbsp;for i in range(5):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print(i)<br />
+          <br />
+          p1 = Process(target=print_numbers)<br />
+          p2 = Process(target=print_numbers)<br />
+          <br />
+          p1.start()<br />
+          p2.start()<br />
+          <br />
+          p1.join()<br />
+          p2.join()
+        </div>
+
+        <div class="note">Each process has its own memory space.</div>
+      </div>
+
+      <div class="section">
+        <h2>5. Thread vs Process</h2>
+
+        <table>
+          <tr>
+            <th>Aspect</th>
+            <th>Thread</th>
+            <th>Process</th>
+          </tr>
+          <tr>
+            <td>Memory</td>
+            <td>Shared</td>
+            <td>Separate</td>
+          </tr>
+          <tr>
+            <td>Overhead</td>
+            <td>Low</td>
+            <td>High</td>
+          </tr>
+          <tr>
+            <td>Use</td>
+            <td>I/O bound tasks</td>
+            <td>CPU bound tasks</td>
+          </tr>
+          <tr>
+            <td>GIL Impact</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>6. Queue for Thread Communication</h2>
+
+        <div class="code">
+          import threading, queue<br />
+          q = queue.Queue()<br />
+          <br />
+          def producer():<br />
+          &nbsp;&nbsp;for i in range(5):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;q.put(i)<br />
+          <br />
+          def consumer():<br />
+          &nbsp;&nbsp;while not q.empty():<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;item = q.get()<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print(item)<br />
+          <br />
+          t1 = threading.Thread(target=producer)<br />
+          t2 = threading.Thread(target=consumer)<br />
+          <br />
+          t1.start()<br />
+          t1.join()<br />
+          t2.start()<br />
+          t2.join()
+        </div>
+
+        <div class="note">Queue helps safely share data between threads.</div>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Create 2 threads printing numbers concurrently</li>
+          <li>Use Lock to prevent race condition on a shared variable</li>
+          <li>Create 2 processes printing numbers concurrently</li>
+          <li>Explain difference between thread and process in interview</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Use multithreading for I/O-bound tasks and multiprocessing for
+          CPU-bound tasks to improve performance.
+        </p>
+        <p><strong>Lesson 16:</strong> Python Asyncio & Event Loop</p>
+      </div>
+    </div>
+  </body>
+</html>

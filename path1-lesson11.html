@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path 1 – Lesson 11 | Iterators & Generators</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .warning {
+        background: #fff7ed;
+        padding: 12px;
+        border-left: 5px solid #ea580c;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #d1d5db;
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background-color: #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 1: Python Interview Preparation</h1>
+      <h2>Phase 1 – Core Python</h2>
+      <h3>Lesson 11: Iterators & Generators</h3>
+
+      <div class="section">
+        <h2>1. What is an Iterator?</h2>
+        <p>
+          An <strong>iterator</strong> is an object that allows traversal
+          through elements one at a time.
+        </p>
+        <ul>
+          <li>Uses <code>__iter__()</code></li>
+          <li>Uses <code>__next__()</code></li>
+        </ul>
+
+        <div class="code">
+          nums = [1, 2, 3]<br />
+          it = iter(nums)<br />
+          print(next(it))<br />
+          print(next(it))
+        </div>
+
+        <div class="note">
+          Interview line:<br />
+          “Iterator remembers its state while iterating.”
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. Iterable vs Iterator</h2>
+
+        <table>
+          <tr>
+            <th>Iterable</th>
+            <th>Iterator</th>
+          </tr>
+          <tr>
+            <td>Can be looped over</td>
+            <td>Returns one value at a time</td>
+          </tr>
+          <tr>
+            <td>Has <code>__iter__()</code></td>
+            <td>Has <code>__iter__()</code> and <code>__next__()</code></td>
+          </tr>
+          <tr>
+            <td>Example: list, tuple</td>
+            <td>Example: iter(list)</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>3. What is a Generator?</h2>
+        <p>
+          A <strong>generator</strong> is a special function that returns an
+          iterator using <code>yield</code>.
+        </p>
+
+        <div class="code">
+          def count_up(n):<br />
+          &nbsp;&nbsp;for i in range(n):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;yield i
+        </div>
+
+        <div class="code">
+          g = count_up(3)<br />
+          print(next(g))<br />
+          print(next(g))
+        </div>
+
+        <div class="note">Generator pauses execution and resumes later.</div>
+      </div>
+
+      <div class="section">
+        <h2>4. yield vs return</h2>
+
+        <table>
+          <tr>
+            <th>yield</th>
+            <th>return</th>
+          </tr>
+          <tr>
+            <td>Returns value and pauses</td>
+            <td>Ends function execution</td>
+          </tr>
+          <tr>
+            <td>Multiple yields possible</td>
+            <td>Only one return</td>
+          </tr>
+          <tr>
+            <td>Memory efficient</td>
+            <td>Returns entire result</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>5. Generator Expression</h2>
+
+        <div class="code">
+          gen = (x*x for x in range(5))<br />
+          print(next(gen))
+        </div>
+
+        <div class="note">
+          Similar to list comprehension but lazy execution.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>6. Memory Efficiency</h2>
+
+        <div class="code">
+          # List<br />
+          nums = [x for x in range(1000000)]
+        </div>
+
+        <div class="code">
+          # Generator<br />
+          nums = (x for x in range(1000000))
+        </div>
+
+        <div class="warning">Generators use significantly less memory.</div>
+      </div>
+
+      <div class="section">
+        <h2>7. StopIteration</h2>
+        <p>
+          When iterator has no more elements, it raises
+          <code>StopIteration</code>.
+        </p>
+
+        <div class="note">for-loop handles this internally.</div>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Create custom iterator class</li>
+          <li>Create Fibonacci generator</li>
+          <li>Explain iterator vs generator in interview</li>
+          <li>Convert list comprehension to generator expression</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Generators improve performance by producing values lazily instead of
+          storing them.
+        </p>
+        <p>
+          <strong>Lesson 12:</strong> Decorators (Most Asked Interview Topic)
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

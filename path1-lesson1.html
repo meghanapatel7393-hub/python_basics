@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path 1 – Python Interview Preparation | Lesson 1</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f4f6f8;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .warning {
+        background: #fff7ed;
+        padding: 12px;
+        border-left: 5px solid #ea580c;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        overflow-x: auto;
+        font-family: Consolas, monospace;
+      }
+      ul {
+        margin-left: 20px;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 1: Python Interview Preparation</h1>
+      <h2>Phase 1 – Core Python (In-Depth)</h2>
+      <h3>Lesson 1: How Python REALLY Works</h3>
+
+      <div class="section">
+        <h2>1. Is Python Compiled or Interpreted?</h2>
+        <p>
+          <strong>Interview-correct answer:</strong><br />
+          Python is an <strong>interpreted language</strong>, but internally it
+          is first <strong>compiled into bytecode</strong>.
+        </p>
+
+        <div class="note">
+          Python source code (.py) is compiled into bytecode (.pyc) and then
+          executed by the Python Virtual Machine (PVM).
+        </div>
+
+        <div class="code">
+          .py file<br />
+          &nbsp;&nbsp;↓<br />
+          Bytecode (.pyc)<br />
+          &nbsp;&nbsp;↓<br />
+          Python Virtual Machine (PVM)
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. Variables & Memory (Interview Favorite)</h2>
+        <p>
+          In Python, a variable is <strong>not a container</strong>. It is a
+          <strong>reference to an object in memory</strong>.
+        </p>
+
+        <div class="code">
+          a = 10<br />
+          b = a
+        </div>
+
+        <p>
+          Both <code>a</code> and <code>b</code> point to the same object
+          <strong>10</strong>.
+        </p>
+
+        <div class="warning">
+          Interview Trap: Python caches small integers for performance.
+        </div>
+
+        <div class="code">
+          a = 10<br />
+          b = 10<br />
+          print(a is b) # True
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. Mutable vs Immutable (VERY IMPORTANT)</h2>
+
+        <h3>Immutable Data Types</h3>
+        <ul>
+          <li>int</li>
+          <li>float</li>
+          <li>string</li>
+          <li>tuple</li>
+        </ul>
+
+        <div class="code">
+          x = 10<br />
+          x = x + 1
+        </div>
+
+        <p>A new object is created in memory.</p>
+
+        <h3>Mutable Data Types</h3>
+        <ul>
+          <li>list</li>
+          <li>dictionary</li>
+          <li>set</li>
+        </ul>
+
+        <div class="code">
+          a = [1, 2]<br />
+          b = a<br />
+          b.append(3)<br />
+          print(a)
+        </div>
+
+        <p>Output: <strong>[1, 2, 3]</strong></p>
+      </div>
+
+      <div class="section">
+        <h2>4. <code>is</code> vs <code>==</code></h2>
+
+        <ul>
+          <li><strong>==</strong> → compares values</li>
+          <li><strong>is</strong> → compares memory location</li>
+        </ul>
+
+        <div class="code">
+          a = [1, 2]<br />
+          b = [1, 2]<br />
+          print(a == b) # True<br />
+          print(a is b) # False
+        </div>
+
+        <div class="note">
+          Interview line: <br />
+          “<code>==</code> checks value equality, <code>is</code> checks object
+          identity.”
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. Function Arguments (Tricky Interview Concept)</h2>
+
+        <p>Python uses <strong>pass-by-object-reference</strong>.</p>
+
+        <div class="code">
+          def change(x):<br />
+          &nbsp;&nbsp;x.append(4)<br /><br />
+          lst = [1, 2, 3]<br />
+          change(lst)<br />
+          print(lst)
+        </div>
+
+        <p>Output: <strong>[1, 2, 3, 4]</strong></p>
+
+        <div class="code">
+          def change(x):<br />
+          &nbsp;&nbsp;x = x + 1<br /><br />
+          a = 10<br />
+          change(a)<br />
+          print(a)
+        </div>
+
+        <p>Output: <strong>10</strong></p>
+      </div>
+
+      <div class="section">
+        <h2>6. Shallow Copy vs Deep Copy</h2>
+
+        <div class="code">
+          import copy<br /><br />
+          a = [[1, 2], [3, 4]]<br />
+          b = copy.copy(a)<br />
+          c = copy.deepcopy(a)
+        </div>
+
+        <ul>
+          <li><strong>Shallow copy:</strong> inner objects shared</li>
+          <li><strong>Deep copy:</strong> fully independent objects</li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Your Interview Practice Task</h2>
+        <ol>
+          <li>Explain mutable vs immutable in your own words</li>
+          <li>Explain <code>is</code> vs <code>==</code> without examples</li>
+          <li>
+            Predict output:
+            <div class="code">
+              a = [1, 2]<br />
+              b = a<br />
+              b = b + [3]<br />
+              print(a)
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          <strong>Lesson 2:</strong> Functions Internals, Scope, Closures & LEGB
+          Rule (🔥 Interview Gold)
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

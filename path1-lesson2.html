@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path 1 – Lesson 2 | Python Functions & Scope</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f4f6f8;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .warning {
+        background: #fff7ed;
+        padding: 12px;
+        border-left: 5px solid #ea580c;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+        overflow-x: auto;
+      }
+      ul {
+        margin-left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 1: Python Interview Preparation</h1>
+      <h2>Phase 1 – Core Python (In-Depth)</h2>
+      <h3>Lesson 2: Functions Internals, Scope & Closures</h3>
+
+      <div class="section">
+        <h2>1. Functions – What Happens Internally?</h2>
+        <p>
+          A function is an <strong>object</strong> in Python. It has its own
+          memory, scope, and reference.
+        </p>
+
+        <div class="code">
+          def greet():<br />
+          &nbsp;&nbsp;print("Hello")<br /><br />
+          print(type(greet))
+        </div>
+
+        <p>Output:</p>
+        <div class="code">&lt;class 'function'&gt;</div>
+
+        <div class="note">
+          Interview line: <br />
+          “Functions are first-class objects in Python.”
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. First-Class Functions (Interview Favorite)</h2>
+        <ul>
+          <li>Functions can be assigned to variables</li>
+          <li>Functions can be passed as arguments</li>
+          <li>Functions can be returned from other functions</li>
+        </ul>
+
+        <div class="code">
+          def add(a, b):<br />
+          &nbsp;&nbsp;return a + b<br /><br />
+          x = add<br />
+          print(x(2, 3))
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. Scope in Python</h2>
+        <p>Scope decides <strong>where a variable can be accessed</strong>.</p>
+
+        <h3>Types of Scope</h3>
+        <ul>
+          <li>Local</li>
+          <li>Enclosing</li>
+          <li>Global</li>
+          <li>Built-in</li>
+        </ul>
+
+        <div class="note">This is called the <strong>LEGB Rule</strong>.</div>
+      </div>
+
+      <div class="section">
+        <h2>4. LEGB Rule Explained (VERY IMPORTANT)</h2>
+
+        <div class="code">
+          x = "global"<br /><br />
+          def outer():<br />
+          &nbsp;&nbsp;x = "enclosing"<br />
+          &nbsp;&nbsp;def inner():<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;x = "local"<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print(x)<br />
+          &nbsp;&nbsp;inner()<br /><br />
+          outer()
+        </div>
+
+        <p>Output:</p>
+        <div class="code">local</div>
+
+        <div class="note">
+          Python searches variables in this order:<br />
+          Local → Enclosing → Global → Built-in
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. Global Keyword</h2>
+
+        <div class="code">
+          x = 10<br /><br />
+          def change():<br />
+          &nbsp;&nbsp;global x<br />
+          &nbsp;&nbsp;x = 20<br /><br />
+          change()<br />
+          print(x)
+        </div>
+
+        <p>Output:</p>
+        <div class="code">20</div>
+
+        <div class="warning">
+          Avoid excessive use of <code>global</code> in real projects.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>6. Closures (INTERVIEW GOLD 🔥)</h2>
+        <p>
+          A closure is a function that
+          <strong>remembers variables from its enclosing scope</strong>
+          even after that scope is finished.
+        </p>
+
+        <div class="code">
+          def outer(msg):<br />
+          &nbsp;&nbsp;def inner():<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print(msg)<br />
+          &nbsp;&nbsp;return inner<br /><br />
+          fn = outer("Hello Python")<br />
+          fn()
+        </div>
+
+        <p>Output:</p>
+        <div class="code">Hello Python</div>
+
+        <div class="note">
+          Interview line:<br />
+          “Closures allow a function to remember the environment in which it was
+          created.”
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>7. Why Closures Are Used?</h2>
+        <ul>
+          <li>Data hiding</li>
+          <li>Function factories</li>
+          <li>Decorator foundation</li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Interview Practice Tasks</h2>
+        <ol>
+          <li>Explain LEGB rule in your own words</li>
+          <li>What is a closure?</li>
+          <li>
+            Predict output:
+            <div class="code">
+              x = 5<br /><br />
+              def outer():<br />
+              &nbsp;&nbsp;x = 10<br />
+              &nbsp;&nbsp;def inner():<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;print(x)<br />
+              &nbsp;&nbsp;return inner<br /><br />
+              f = outer()<br />
+              f()
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          <strong>Lesson 3:</strong> Lambda Functions, map(), filter(), reduce()
+          (🔥 Frequently Asked in Interviews)
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
