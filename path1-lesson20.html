@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path 1 – Lesson 20 | Python Decorators</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .warning {
+        background: #fff7ed;
+        padding: 12px;
+        border-left: 5px solid #ea580c;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+        overflow-x: auto;
+      }
+      ul,
+      ol {
+        margin-left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 1: Python Interview Preparation</h1>
+      <h2>Phase 2 – Advanced Python</h2>
+      <h3>Lesson 20: Python Decorators</h3>
+
+      <div class="section">
+        <h2>1. What is a Decorator?</h2>
+        <p>
+          A decorator is a function that modifies another function’s behavior
+          without changing its source code.
+        </p>
+
+        <div class="note">
+          Decorators are possible because functions are
+          <strong>first-class objects</strong> in Python.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. Function Inside a Function</h2>
+
+        <div class="code">
+          def outer():<br />
+          &nbsp;&nbsp;def inner():<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print("Hello from inner")<br />
+          &nbsp;&nbsp;return inner<br /><br />
+          fn = outer()<br />
+          fn()
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. Simple Decorator Example</h2>
+
+        <div class="code">
+          def my_decorator(func):<br />
+          &nbsp;&nbsp;def wrapper():<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print("Before function")<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;func()<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print("After function")<br />
+          &nbsp;&nbsp;return wrapper<br /><br />
+          @my_decorator<br />
+          def say_hello():<br />
+          &nbsp;&nbsp;print("Hello!")<br /><br />
+          say_hello()
+        </div>
+
+        <div class="note">
+          <code>@my_decorator</code> is shorthand for
+          <code>say_hello = my_decorator(say_hello)</code>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. Decorators with Arguments</h2>
+
+        <div class="code">
+          def my_decorator(func):<br />
+          &nbsp;&nbsp;def wrapper(*args, **kwargs):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print("Function started")<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return func(*args, **kwargs)<br />
+          &nbsp;&nbsp;return wrapper<br /><br />
+          @my_decorator<br />
+          def add(a, b):<br />
+          &nbsp;&nbsp;return a + b<br /><br />
+          print(add(3, 4))
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. Real-World Use Cases</h2>
+
+        <ul>
+          <li>Logging function calls</li>
+          <li>Authentication & authorization</li>
+          <li>Performance timing</li>
+          <li>Caching results</li>
+          <li>Access control</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>6. Example: Timing a Function</h2>
+
+        <div class="code">
+          import time<br /><br />
+          def timer(func):<br />
+          &nbsp;&nbsp;def wrapper():<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;start = time.time()<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;func()<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;end = time.time()<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print("Time:", end - start)<br />
+          &nbsp;&nbsp;return wrapper<br /><br />
+          @timer<br />
+          def task():<br />
+          &nbsp;&nbsp;for i in range(1000000):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;pass<br /><br />
+          task()
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>7. Built-in Decorators</h2>
+        <ul>
+          <li><code>@staticmethod</code></li>
+          <li><code>@classmethod</code></li>
+          <li><code>@property</code></li>
+        </ul>
+      </div>
+
+      <div class="warning">
+        <strong>Common Mistake:</strong> Forgetting <code>*args</code> and
+        <code>**kwargs</code> breaks decorated functions.
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Create a decorator that prints function name</li>
+          <li>Create a decorator for authentication check</li>
+          <li>Write a decorator that logs arguments</li>
+          <li>Explain decorators in your own words (interview)</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Decorators modify function behavior without changing the function code
+          and are widely used for logging, authentication, and performance
+          monitoring
+        </p>
+        <p><strong>Lesson 21:</strong> Generators & Iterators in Python</p>
+      </div>
+    </div>
+  </body>
+</html>

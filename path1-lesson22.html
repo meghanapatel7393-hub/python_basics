@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path 1 – Lesson 22 | Context Managers</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .warning {
+        background: #fff7ed;
+        padding: 12px;
+        border-left: 5px solid #ea580c;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+        overflow-x: auto;
+      }
+      ul,
+      ol {
+        margin-left: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #d1d5db;
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background-color: #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 1: Python Interview Preparation</h1>
+      <h2>Phase 2 – Advanced Python</h2>
+      <h3>Lesson 22: Context Managers & <code>with</code> Statement</h3>
+
+      <div class="section">
+        <h2>1. What is a Context Manager?</h2>
+        <p>
+          A context manager is an object that manages resources like files,
+          database connections, or locks by automatically handling setup and
+          cleanup.
+        </p>
+
+        <div class="note">
+          Context managers ensure that resources are properly released even if
+          an error occurs.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. Problem Without Context Manager</h2>
+
+        <div class="code">
+          file = open("data.txt", "r")<br />
+          content = file.read()<br />
+          file.close()
+        </div>
+
+        <div class="warning">
+          If an error occurs before <code>close()</code>, the file remains open.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. Using Context Manager (<code>with</code>)</h2>
+
+        <div class="code">
+          with open("data.txt", "r") as file:<br />
+          &nbsp;&nbsp;content = file.read()<br />
+          # file is automatically closed
+        </div>
+
+        <div class="note">
+          Python automatically calls cleanup code when the block exits.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. How Context Managers Work Internally</h2>
+
+        <ul>
+          <li><code>__enter__()</code> → Setup resource</li>
+          <li><code>__exit__()</code> → Cleanup resource</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>5. Creating Custom Context Manager (Class)</h2>
+
+        <div class="code">
+          class MyContext:<br />
+          &nbsp;&nbsp;def __enter__(self):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print("Enter context")<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return self<br /><br />
+          &nbsp;&nbsp;def __exit__(self, exc_type, exc_value, traceback):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print("Exit context")<br /><br />
+          with MyContext():<br />
+          &nbsp;&nbsp;print("Inside block")
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>6. Context Manager Using contextlib</h2>
+
+        <div class="code">
+          from contextlib import contextmanager<br /><br />
+          @contextmanager<br />
+          def my_context():<br />
+          &nbsp;&nbsp;print("Enter")<br />
+          &nbsp;&nbsp;yield<br />
+          &nbsp;&nbsp;print("Exit")<br /><br />
+          with my_context():<br />
+          &nbsp;&nbsp;print("Inside")
+        </div>
+
+        <div class="note">This approach is cleaner and interview-friendly.</div>
+      </div>
+
+      <div class="section">
+        <h2>7. Real-World Use Cases</h2>
+
+        <ul>
+          <li>File handling</li>
+          <li>Database connections</li>
+          <li>Thread locks</li>
+          <li>Network sockets</li>
+          <li>Transaction management</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>8. Interview Questions</h2>
+        <ul>
+          <li>What is a context manager?</li>
+          <li>Difference between try/finally and with</li>
+          <li>Explain __enter__ and __exit__</li>
+          <li>Why use contextlib?</li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Write a custom context manager using a class</li>
+          <li>Create a context manager using contextlib</li>
+          <li>Explain why with statement is safer</li>
+          <li>Handle exceptions inside __exit__</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Context managers ensure proper resource management using __enter__ and
+          __exit__, making code safer and cleaner.
+        </p>
+        <p>
+          <strong>Lesson 23:</strong> Multithreading & Multiprocessing in Python
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

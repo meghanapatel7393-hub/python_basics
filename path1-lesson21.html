@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path 1 – Lesson 21 | Generators & Iterators</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .warning {
+        background: #fff7ed;
+        padding: 12px;
+        border-left: 5px solid #ea580c;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+        overflow-x: auto;
+      }
+      ul,
+      ol {
+        margin-left: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #d1d5db;
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background-color: #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 1: Python Interview Preparation</h1>
+      <h2>Phase 2 – Advanced Python</h2>
+      <h3>Lesson 21: Generators & Iterators</h3>
+
+      <div class="section">
+        <h2>1. What is an Iterator?</h2>
+        <p>
+          An iterator is an object that allows you to traverse through all
+          elements of a collection one by one.
+        </p>
+
+        <div class="code">
+          numbers = [1, 2, 3]<br />
+          it = iter(numbers)<br />
+          print(next(it))<br />
+          print(next(it))<br />
+          print(next(it))
+        </div>
+
+        <div class="note">
+          Iterators use <code>__iter__()</code> and
+          <code>__next__()</code> methods internally.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. Custom Iterator Example</h2>
+
+        <div class="code">
+          class CountUp:<br />
+          &nbsp;&nbsp;def __init__(self, max):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;self.max = max<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;self.current = 1<br /><br />
+          &nbsp;&nbsp;def __iter__(self):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return self<br /><br />
+          &nbsp;&nbsp;def __next__(self):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;if self.current > self.max:<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raise StopIteration<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;val = self.current<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;self.current += 1<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return val
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. What is a Generator?</h2>
+        <p>
+          A generator is a simpler way to create iterators using the
+          <code>yield</code> keyword.
+        </p>
+
+        <div class="note">
+          Generator remembers its state between function calls.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. Generator Function Example</h2>
+
+        <div class="code">
+          def count_up(max):<br />
+          &nbsp;&nbsp;num = 1<br />
+          &nbsp;&nbsp;while num <= max:<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;yield num<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;num += 1<br /><br />
+          for n in count_up(5):<br />
+          &nbsp;&nbsp;print(n)
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. Generator Expression</h2>
+
+        <div class="code">
+          gen = (x * x for x in range(5))<br />
+          print(next(gen))<br />
+          print(next(gen))
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>6. Generator vs Iterator</h2>
+
+        <table>
+          <tr>
+            <th>Iterator</th>
+            <th>Generator</th>
+          </tr>
+          <tr>
+            <td>More code</td>
+            <td>Less code</td>
+          </tr>
+          <tr>
+            <td>Uses __iter__ & __next__</td>
+            <td>Uses yield</td>
+          </tr>
+          <tr>
+            <td>Complex</td>
+            <td>Simple & clean</td>
+          </tr>
+          <tr>
+            <td>Manual StopIteration</td>
+            <td>Automatic StopIteration</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>7. Memory Efficiency</h2>
+        <p>
+          Generators generate values one at a time, saving memory for large
+          datasets.
+        </p>
+
+        <div class="code">
+          nums = (i for i in range(1000000)) # memory efficient
+        </div>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Create a generator for even numbers</li>
+          <li>Convert a loop into a generator</li>
+          <li>Create a custom iterator class</li>
+          <li>Explain difference between generator & iterator in interview</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Generators are memory-efficient iterators created using the yield
+          keyword and are ideal for large datasets.
+        </p>
+        <p>
+          <strong>Lesson 22:</strong> Context Managers (<code>with</code>
+          statement)
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
