@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path 1 – Lesson 19 | Logging & Debugging</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .warning {
+        background: #fff7ed;
+        padding: 12px;
+        border-left: 5px solid #ea580c;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+        overflow-x: auto;
+      }
+      ul,
+      ol {
+        margin-left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 1: Python Interview Preparation</h1>
+      <h2>Phase 2 – Python Advanced Concepts</h2>
+      <h3>Lesson 19: Logging & Debugging</h3>
+
+      <div class="section">
+        <h2>1. Why Logging?</h2>
+        <p>
+          Logging helps record events and debug information instead of using
+          <code>print()</code>. It’s better for production-ready applications.
+        </p>
+
+        <div class="note">
+          Logging can include timestamp, severity level, and message.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. Basic Logging Setup</h2>
+
+        <div class="code">
+          import logging<br />
+          logging.basicConfig(level=logging.INFO)<br />
+          logging.info("This is an info message")<br />
+          logging.warning("This is a warning")<br />
+          logging.error("This is an error")
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. Logging Levels</h2>
+
+        <table>
+          <tr>
+            <th>Level</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>DEBUG</td>
+            <td>Detailed information, mostly for developers</td>
+          </tr>
+          <tr>
+            <td>INFO</td>
+            <td>Confirmation that things are working as expected</td>
+          </tr>
+          <tr>
+            <td>WARNING</td>
+            <td>Indication of a potential problem</td>
+          </tr>
+          <tr>
+            <td>ERROR</td>
+            <td>Serious problem that prevented some function</td>
+          </tr>
+          <tr>
+            <td>CRITICAL</td>
+            <td>Severe error, program may not continue</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>4. Logging to a File</h2>
+
+        <div class="code">
+          logging.basicConfig(filename="app.log", level=logging.INFO,<br />
+          format='%(asctime)s:%(levelname)s:%(message)s')<br />
+          logging.info("Application started")<br />
+          logging.error("An error occurred")
+        </div>
+
+        <div class="note">
+          Logs can now be saved to a file with timestamps and levels.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. Debugging with pdb</h2>
+        <p>
+          Python debugger (<code>pdb</code>) allows step-by-step execution to
+          find bugs.
+        </p>
+
+        <div class="code">
+          import pdb<br />
+          <br />
+          def add(a, b):<br />
+          &nbsp;&nbsp;return a + b<br />
+          <br />
+          pdb.set_trace() # Start debugger<br />
+          result = add(5, 7)<br />
+          print(result)
+        </div>
+
+        <div class="note">
+          Use commands: <code>n</code> (next), <code>c</code> (continue),
+          <code>l</code> (list), <code>p</code> (print variable)
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>6. Best Practices</h2>
+        <ul>
+          <li>Use logging instead of print in production</li>
+          <li>Use proper logging levels</li>
+          <li>Store logs in files for auditing/debugging</li>
+          <li>Use pdb or IDE debugger for step-by-step debugging</li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Set up logging to console with INFO and WARNING messages</li>
+          <li>Set up logging to a file with timestamps</li>
+          <li>Debug a function using pdb to check variable values</li>
+          <li>Explain difference between logging levels in an interview</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Logging replaces print statements in production and provides
+          structured, level-based information for easier debugging.
+        </p>
+        <p>
+          <strong>Lesson 20:</strong> Python Decorators – Functions, Use Cases &
+          Advanced Examples
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
