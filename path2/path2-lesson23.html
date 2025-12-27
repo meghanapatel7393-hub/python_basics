@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PATH 2 – Lesson 23 | Flask REST API Search Functionality</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 2: Django / Flask / FastAPI</h1>
+      <h2>Phase 4 – Flask REST API</h2>
+      <h3>Lesson 23: Flask REST API Search Functionality</h3>
+
+      <div class="section">
+        <h2>1. Why Search Functionality?</h2>
+        <p>
+          Search functionality allows clients to find specific data in large
+          datasets quickly using keywords or phrases.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>2. Basic Search Implementation</h2>
+
+        <div class="code">
+          @app.route("/todos/search", methods=["GET"])<br />
+          def search_todos():<br />
+          &nbsp;&nbsp;query = request.args.get("q", "")<br />
+          &nbsp;&nbsp;todos =
+          Todo.query.filter(Todo.task.contains(query)).all()<br />
+          &nbsp;&nbsp;result = [{"id": t.id, "task": t.task} for t in todos]<br />
+          &nbsp;&nbsp;return jsonify(result)
+        </div>
+
+        <div class="note">
+          Use query parameter <code>?q=Flask</code> to search tasks containing
+          the word "Flask".
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. Combining Search with Pagination</h2>
+
+        <div class="code">
+          @app.route("/todos/search_paginate", methods=["GET"])<br />
+          def search_paginate():<br />
+          &nbsp;&nbsp;query = request.args.get("q", "")<br />
+          &nbsp;&nbsp;page = int(request.args.get("page", 1))<br />
+          &nbsp;&nbsp;per_page = int(request.args.get("per_page", 5))<br />
+          &nbsp;&nbsp;todos_paginated =
+          Todo.query.filter(Todo.task.contains(query)).paginate(page=page,
+          per_page=per_page)<br />
+          &nbsp;&nbsp;result = [{"id": t.id, "task": t.task} for t in
+          todos_paginated.items]<br />
+          &nbsp;&nbsp;return jsonify({<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;"page": page,<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;"per_page": per_page,<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;"total": todos_paginated.total,<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;"todos": result<br />
+          &nbsp;&nbsp;})
+        </div>
+
+        <div class="note">
+          Combining search with pagination improves performance and usability on
+          large datasets.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. Notes & Best Practices</h2>
+        <ul>
+          <li>Use SQL indexes on searchable columns for faster queries</li>
+          <li>Sanitize input to prevent SQL injection</li>
+          <li>
+            Consider adding full-text search or using ElasticSearch for complex
+            search requirements
+          </li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Create search endpoint for todos</li>
+          <li>Combine search with pagination</li>
+          <li>Test search queries with Postman using different keywords</li>
+          <li>Optional: Implement case-insensitive search</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Flask search endpoints allow clients to query data efficiently,
+          optionally combined with pagination for large datasets.
+        </p>
+        <p><strong>Lesson 24:</strong> Flask REST API File Upload & Download</p>
+      </div>
+    </div>
+  </body>
+</html>

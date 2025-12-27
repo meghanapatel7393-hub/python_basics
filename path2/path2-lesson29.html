@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PATH 2 – Lesson 29 | Flask REST API Testing with Pytest</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 2: Django / Flask / FastAPI</h1>
+      <h2>Phase 4 – Flask REST API</h2>
+      <h3>Lesson 29: Flask REST API Testing with Pytest</h3>
+
+      <div class="section">
+        <h2>1. Why Testing?</h2>
+        <p>
+          Testing ensures your API works correctly and prevents bugs when
+          updating code. Pytest is a popular Python testing framework.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>2. Installing Pytest</h2>
+
+        <div class="code">pip install pytest pytest-flask</div>
+      </div>
+
+      <div class="section">
+        <h2>3. Setting Up a Test File</h2>
+
+        <div class="code">
+          # test_app.py<br />
+          import pytest<br />
+          from app import app<br /><br />
+          @pytest.fixture<br />
+          def client():<br />
+          &nbsp;&nbsp;with app.test_client() as client:<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;yield client
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. Writing a Test Case</h2>
+
+        <div class="code">
+          def test_get_todos(client):<br />
+          &nbsp;&nbsp;response = client.get("/todos")<br />
+          &nbsp;&nbsp;assert response.status_code == 200<br />
+          &nbsp;&nbsp;data = response.get_json()<br />
+          &nbsp;&nbsp;assert isinstance(data, list)
+        </div>
+
+        <div class="note">
+          Use <code>client.get()</code>, <code>client.post()</code>, etc. to
+          simulate API requests.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. Running Tests</h2>
+
+        <div class="code">pytest test_app.py</div>
+
+        <div class="note">
+          Pytest will automatically discover test functions prefixed with
+          <code>test_</code>.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>6. Notes & Best Practices</h2>
+        <ul>
+          <li>Test both success and failure scenarios</li>
+          <li>Use fixtures for reusable setup (like client, database)</li>
+          <li>Keep tests small and focused</li>
+          <li>Run tests frequently during development</li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Create tests for all CRUD endpoints</li>
+          <li>Test error scenarios (invalid input, 404, etc.)</li>
+          <li>Run tests and ensure all pass</li>
+          <li>Optional: Integrate tests into CI/CD pipeline</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Pytest allows testing Flask endpoints by simulating requests, ensuring
+          API correctness and reliability.
+        </p>
+        <p>
+          <strong>Lesson 30:</strong> Flask REST API Deployment to Production
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

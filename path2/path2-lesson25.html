@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>
+      PATH 2 – Lesson 25 | Flask REST API Rate Limiting & Throttling
+    </title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 2: Django / Flask / FastAPI</h1>
+      <h2>Phase 4 – Flask REST API</h2>
+      <h3>Lesson 25: Flask REST API Rate Limiting & Throttling</h3>
+
+      <div class="section">
+        <h2>1. Why Rate Limiting & Throttling?</h2>
+        <p>
+          Rate limiting prevents abuse of your API by restricting the number of
+          requests a client can make in a given time period. Throttling protects
+          server resources and improves security.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>2. Installing Flask-Limiter</h2>
+
+        <div class="code">pip install Flask-Limiter</div>
+      </div>
+
+      <div class="section">
+        <h2>3. Configuring Flask-Limiter</h2>
+
+        <div class="code">
+          from flask import Flask, jsonify<br />
+          from flask_limiter import Limiter<br />
+          from flask_limiter.util import get_remote_address<br /><br />
+          app = Flask(__name__)<br />
+          limiter = Limiter(app, key_func=get_remote_address)
+        </div>
+
+        <div class="note">
+          <code>get_remote_address</code> identifies clients by their IP
+          address.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. Applying Rate Limits to Endpoints</h2>
+
+        <div class="code">
+          @app.route("/todos")<br />
+          @limiter.limit("5 per minute") # Limit to 5 requests per minute per
+          client<br />
+          def get_todos():<br />
+          &nbsp;&nbsp;return jsonify({"message": "This is a rate-limited
+          endpoint"})
+        </div>
+
+        <div class="note">
+          You can change the limit to any number and duration, e.g.,
+          <code>"100 per hour"</code>.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. Notes & Best Practices</h2>
+        <ul>
+          <li>Set reasonable limits for public and authenticated endpoints</li>
+          <li>Combine with authentication to enforce per-user limits</li>
+          <li>
+            Consider using Redis for distributed rate-limiting in production
+          </li>
+          <li>Return meaningful error messages when limit is exceeded</li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Apply rate limiting to all GET and POST endpoints</li>
+          <li>Test exceeding the limit using Postman</li>
+          <li>Optional: Use Redis for distributed limiting</li>
+          <li>Optional: Apply different limits for free vs premium users</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Flask-Limiter enforces rate limits on API endpoints, preventing abuse
+          and ensuring fair usage across clients.
+        </p>
+        <p><strong>Lesson 26:</strong> Flask REST API Versioning</p>
+      </div>
+    </div>
+  </body>
+</html>

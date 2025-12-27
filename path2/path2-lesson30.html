@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PATH 2 – Lesson 30 | Flask REST API Deployment to Production</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 2: Django / Flask / FastAPI</h1>
+      <h2>Phase 4 – Flask REST API</h2>
+      <h3>Lesson 30: Flask REST API Deployment to Production</h3>
+
+      <div class="section">
+        <h2>1. Why Deployment?</h2>
+        <p>
+          Deployment makes your Flask API accessible to users on the internet or
+          within a network. Production deployment requires proper server,
+          security, and performance considerations.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>2. Using Gunicorn with Flask</h2>
+
+        <div class="code">
+          # Install Gunicorn<br />
+          pip install gunicorn<br /><br />
+          # Run Flask app with Gunicorn<br />
+          gunicorn -w 4 -b 0.0.0.0:8000 app:app
+        </div>
+
+        <div class="note">
+          <code>-w 4</code> sets 4 worker processes.
+          <code>0.0.0.0:8000</code> binds to all network interfaces.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. Using Nginx as Reverse Proxy</h2>
+
+        <div class="code">
+          # Sample Nginx configuration<br />
+          server {<br />
+          &nbsp;&nbsp;listen 80;<br />
+          &nbsp;&nbsp;server_name example.com;<br /><br />
+          &nbsp;&nbsp;location / {<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;proxy_pass http://127.0.0.1:8000;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;proxy_set_header Host $host;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;proxy_set_header X-Real-IP $remote_addr;<br />
+          &nbsp;&nbsp;}<br />
+          }
+        </div>
+
+        <div class="note">
+          Nginx handles static files, SSL termination, and load balancing.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. Notes & Best Practices</h2>
+        <ul>
+          <li>Use environment variables for secrets and configuration</li>
+          <li>
+            Enable HTTPS for secure communication (Let's Encrypt or paid SSL)
+          </li>
+          <li>Monitor app using logs, uptime checks, and metrics</li>
+          <li>
+            Use process managers like Supervisor or systemd to manage Gunicorn
+          </li>
+          <li>
+            Consider scaling with Docker and Kubernetes for larger applications
+          </li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Deploy a simple Flask API using Gunicorn</li>
+          <li>Configure Nginx as a reverse proxy</li>
+          <li>Test API access from an external device or network</li>
+          <li>Optional: Enable HTTPS using Let's Encrypt</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Flask deployment uses Gunicorn and Nginx to serve production-ready
+          APIs with security, performance, and scalability considerations
+        </p>
+        <p>
+          <strong>Lesson 31:</strong> Flask REST API Security Best Practices
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

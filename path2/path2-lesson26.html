@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PATH 2 – Lesson 26 | Flask REST API Versioning</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 2: Django / Flask / FastAPI</h1>
+      <h2>Phase 4 – Flask REST API</h2>
+      <h3>Lesson 26: Flask REST API Versioning</h3>
+
+      <div class="section">
+        <h2>1. Why API Versioning?</h2>
+        <p>
+          API versioning allows evolving your API without breaking existing
+          clients. Clients can use specific versions while new features are
+          added in newer versions.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>2. URL-Based Versioning</h2>
+
+        <div class="code">
+          @app.route("/api/v1/todos", methods=["GET"])<br />
+          def get_todos_v1():<br />
+          &nbsp;&nbsp;return jsonify({"version": "v1", "todos": ["task1",
+          "task2"]})<br /><br />
+
+          @app.route("/api/v2/todos", methods=["GET"])<br />
+          def get_todos_v2():<br />
+          &nbsp;&nbsp;return jsonify({"version": "v2", "todos":
+          [{"id":1,"task":"task1"},{"id":2,"task":"task2"}]})
+        </div>
+
+        <div class="note">
+          Clients can access <code>/api/v1/todos</code> or
+          <code>/api/v2/todos</code> based on compatibility.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. Header-Based Versioning</h2>
+
+        <div class="code">
+          @app.route("/api/todos", methods=["GET"])<br />
+          def get_todos_header():<br />
+          &nbsp;&nbsp;version = request.headers.get("X-API-Version", "v1")<br />
+          &nbsp;&nbsp;if version == "v1":<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return jsonify({"version": "v1", "todos":
+          ["task1", "task2"]})<br />
+          &nbsp;&nbsp;else:<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return jsonify({"version": "v2", "todos":
+          [{"id":1,"task":"task1"},{"id":2,"task":"task2"}]})
+        </div>
+
+        <div class="note">
+          Clients specify version in request headers:
+          <code>X-API-Version: v2</code>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. Notes & Best Practices</h2>
+        <ul>
+          <li>Always maintain backward compatibility for existing clients</li>
+          <li>Use semantic versioning for clarity (v1, v2, etc.)</li>
+          <li>Document versions clearly in API documentation</li>
+          <li>Consider deprecating old versions after a transition period</li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Implement URL-based versioning for a todo API</li>
+          <li>Implement header-based versioning</li>
+          <li>Test different versions using Postman</li>
+          <li>Optional: Add new fields in v2 while keeping v1 intact</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Flask API versioning allows multiple versions to coexist, ensuring
+          backward compatibility for clients while evolving features
+        </p>
+        <p>
+          <strong>Lesson 27:</strong> Flask REST API Caching with Flask-Caching
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

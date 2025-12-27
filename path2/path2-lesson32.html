@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PATH 2 – Lesson 32 | Flask REST API Scaling & Load Balancing</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #fef3c7;
+        padding: 12px;
+        border-left: 5px solid #f59e0b;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 2: Django / Flask / FastAPI</h1>
+      <h2>Phase 4 – Flask REST API</h2>
+      <h3>Lesson 32: Flask REST API Scaling & Load Balancing</h3>
+
+      <div class="section">
+        <h2>1. Why Scaling & Load Balancing?</h2>
+        <p>
+          Scaling ensures your API can handle increasing traffic without
+          downtime. Load balancing distributes traffic across multiple servers
+          for reliability and performance.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>2. Vertical Scaling</h2>
+        <p>
+          Increase resources (CPU, RAM) of a single server. Easy but limited by
+          hardware capacity.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>3. Horizontal Scaling</h2>
+        <p>
+          Add multiple servers to handle requests. Requires a load balancer to
+          distribute traffic.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>4. Using Gunicorn with Multiple Workers</h2>
+
+        <div class="code">
+          # Example: 4 workers<br />
+          gunicorn -w 4 -b 0.0.0.0:8000 app:app
+        </div>
+
+        <div class="note">
+          Each worker handles requests concurrently, improving throughput on a
+          single server.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. Load Balancing with Nginx</h2>
+
+        <div class="code">
+          upstream flask_app {<br />
+          &nbsp;&nbsp;server 127.0.0.1:8000;<br />
+          &nbsp;&nbsp;server 127.0.0.1:8001;<br />
+          }<br /><br />
+          server {<br />
+          &nbsp;&nbsp;listen 80;<br />
+          &nbsp;&nbsp;server_name example.com;<br />
+          &nbsp;&nbsp;location / {<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;proxy_pass http://flask_app;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;proxy_set_header Host $host;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;proxy_set_header X-Real-IP $remote_addr;<br />
+          &nbsp;&nbsp;}<br />
+          }
+        </div>
+
+        <div class="note">
+          Nginx distributes requests across multiple Gunicorn processes or
+          servers.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>6. Notes & Best Practices</h2>
+        <ul>
+          <li>Use horizontal scaling for high traffic applications</li>
+          <li>Monitor server health and scale dynamically if needed</li>
+          <li>Combine caching, database optimization, and load balancing</li>
+          <li>Use containerization (Docker) for easier scaling</li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Run multiple Gunicorn workers for your Flask API</li>
+          <li>Configure Nginx to load balance between workers</li>
+          <li>Test API performance with multiple concurrent requests</li>
+          <li>Optional: Containerize your app using Docker for scaling</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Steps</h2>
+        <p>
+          Flask API scaling uses multiple Gunicorn workers and Nginx load
+          balancing to handle high traffic efficiently and ensure reliability.
+        </p>
+        <p>
+          <strong>Congratulations!</strong> You have completed Flask REST API
+          full journey. Next, you can explore Django, FastAPI, or advanced
+          DevOps for Python APIs.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
