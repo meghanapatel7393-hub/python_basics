@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Which Python Framework to Learn Next</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2 {
+        color: #1e40af;
+      }
+      .framework {
+        background: #ffffff;
+        padding: 20px;
+        border-left: 6px solid #2563eb;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .framework h3 {
+        color: #1e3a8a;
+        margin-top: 0;
+      }
+      .pros,
+      .cons,
+      .best-for {
+        margin-left: 20px;
+        margin-bottom: 10px;
+      }
+      .note {
+        background: #fef3c7;
+        padding: 12px;
+        border-left: 5px solid #f59e0b;
+        border-radius: 4px;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Which Python Framework to Learn Next</h1>
+    <p>
+      This guide helps you decide between Flask, Django, and FastAPI after
+      completing PATH 1 & PATH 2.
+    </p>
+
+    <div class="framework">
+      <h3>1. Flask</h3>
+      <div class="pros">
+        <strong>Pros:</strong>
+        <ul>
+          <li>Lightweight and easy to learn</li>
+          <li>Perfect for small-to-medium REST APIs or microservices</li>
+          <li>Huge ecosystem and tutorials</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <strong>Cons:</strong>
+        <ul>
+          <li>
+            Synchronous by default → slower for high-traffic async endpoints
+          </li>
+          <li>You build everything yourself (auth, admin, etc.)</li>
+        </ul>
+      </div>
+      <div class="best-for">
+        <strong>Best For:</strong> Beginners, small projects, or learning REST
+        API fundamentals
+      </div>
+    </div>
+
+    <div class="framework">
+      <h3>2. Django + Django REST Framework</h3>
+      <div class="pros">
+        <strong>Pros:</strong>
+        <ul>
+          <li>Full-featured web framework (ORM, admin panel, templates)</li>
+          <li>Django REST Framework (DRF) for structured APIs</li>
+          <li>Popular in enterprise-level projects → high job demand</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <strong>Cons:</strong>
+        <ul>
+          <li>More boilerplate than Flask → slower for small projects</li>
+          <li>Slightly steeper learning curve</li>
+        </ul>
+      </div>
+      <div class="best-for">
+        <strong>Best For:</strong> Full-stack web apps, projects with
+        authentication/admin, enterprise jobs
+      </div>
+    </div>
+
+    <div class="framework">
+      <h3>3. FastAPI</h3>
+      <div class="pros">
+        <strong>Pros:</strong>
+        <ul>
+          <li>Modern, high-performance, async-ready</li>
+          <li>Automatic OpenAPI/Swagger documentation</li>
+          <li>Type-safe → fewer bugs</li>
+          <li>Growing fast in popularity → used in startups & microservices</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <strong>Cons:</strong>
+        <ul>
+          <li>Smaller ecosystem than Django/Flask (but growing)</li>
+          <li>Less beginner-friendly if you haven’t learned async Python</li>
+        </ul>
+      </div>
+      <div class="best-for">
+        <strong>Best For:</strong> High-performance APIs, async-heavy
+        applications, modern backend development jobs
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>Recommendation:</strong><br />
+      - For **startups or modern backend jobs** → Learn
+      <strong>FastAPI</strong> - For **traditional web development / enterprise
+      jobs** → Learn <strong>Django + DRF</strong>
+      - Flask is good for learning basics and small projects, but moving to
+      FastAPI or Django is more valuable now.
+    </div>
+  </body>
+</html>
