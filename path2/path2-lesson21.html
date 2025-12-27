@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PATH 2 – Lesson 21 | Flask REST API Pagination & Filtering</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 2: Django / Flask / FastAPI</h1>
+      <h2>Phase 4 – Flask REST API</h2>
+      <h3>Lesson 21: Flask REST API Pagination & Filtering</h3>
+
+      <div class="section">
+        <h2>1. Why Pagination & Filtering?</h2>
+        <p>
+          APIs may return large datasets. Pagination limits the number of
+          records per request and filtering allows clients to query specific
+          data.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>2. Pagination Example</h2>
+
+        <div class="code">
+          @app.route("/todos", methods=["GET"])<br />
+          def get_todos():<br />
+          &nbsp;&nbsp;page = int(request.args.get("page", 1))<br />
+          &nbsp;&nbsp;per_page = int(request.args.get("per_page", 5))<br />
+          &nbsp;&nbsp;todos_query = Todo.query.paginate(page=page,
+          per_page=per_page)<br />
+          &nbsp;&nbsp;result = [{"id": t.id, "task": t.task} for t in
+          todos_query.items]<br />
+          &nbsp;&nbsp;return jsonify({<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;"page": page,<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;"per_page": per_page,<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;"total": todos_query.total,<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;"todos": result<br />
+          &nbsp;&nbsp;})
+        </div>
+
+        <div class="note">
+          Clients can use query params like <code>?page=2&per_page=10</code> to
+          navigate.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. Filtering Example</h2>
+
+        <div class="code">
+          @app.route("/todos/filter", methods=["GET"])<br />
+          def filter_todos():<br />
+          &nbsp;&nbsp;search = request.args.get("task", "")<br />
+          &nbsp;&nbsp;todos_filtered =
+          Todo.query.filter(Todo.task.contains(search)).all()<br />
+          &nbsp;&nbsp;result = [{"id": t.id, "task": t.task} for t in
+          todos_filtered]<br />
+          &nbsp;&nbsp;return jsonify(result)
+        </div>
+
+        <div class="note">
+          Filtering uses SQLAlchemy query operators. Clients can pass
+          <code>?task=Flask</code> to search.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. Notes & Best Practices</h2>
+        <ul>
+          <li>
+            Always validate <code>page</code> and
+            <code>per_page</code> parameters.
+          </li>
+          <li>
+            Use indexes in database for faster filtering on large datasets.
+          </li>
+          <li>
+            Combine pagination with filtering for efficient API responses.
+          </li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Implement pagination for todos with query parameters</li>
+          <li>Implement filtering by task name or keyword</li>
+          <li>Combine pagination and filtering together</li>
+          <li>Test endpoints using Postman or curl</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Pagination limits API responses and filtering enables querying
+          specific data, improving performance and usability.
+        </p>
+        <p><strong>Lesson 22:</strong> Flask REST API Sorting & Ordering</p>
+      </div>
+    </div>
+  </body>
+</html>

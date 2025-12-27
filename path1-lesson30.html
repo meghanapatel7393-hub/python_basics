@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path 1 – Lesson 30 | Performance Optimization</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .warning {
+        background: #fff7ed;
+        padding: 12px;
+        border-left: 5px solid #ea580c;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+      th,
+      td {
+        border: 1px solid #d1d5db;
+        padding: 10px;
+      }
+      th {
+        background-color: #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 1: Python Interview Preparation</h1>
+      <h2>Phase 5 – Performance & Optimization</h2>
+      <h3>Lesson 30: Python Performance Optimization & Profiling</h3>
+
+      <div class="section">
+        <h2>1. Why Performance Matters?</h2>
+        <ul>
+          <li>Faster applications</li>
+          <li>Better user experience</li>
+          <li>Lower server costs</li>
+          <li>Scalability</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>2. Common Performance Problems</h2>
+        <ul>
+          <li>Nested loops</li>
+          <li>Unnecessary calculations</li>
+          <li>Inefficient data structures</li>
+          <li>Repeated I/O operations</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>3. Time Complexity Basics</h2>
+
+        <table>
+          <tr>
+            <th>Complexity</th>
+            <th>Example</th>
+          </tr>
+          <tr>
+            <td>O(1)</td>
+            <td>Access by index</td>
+          </tr>
+          <tr>
+            <td>O(n)</td>
+            <td>Single loop</td>
+          </tr>
+          <tr>
+            <td>O(n²)</td>
+            <td>Nested loops</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>4. Using Efficient Data Structures</h2>
+
+        <table>
+          <tr>
+            <th>Use</th>
+            <th>Instead of</th>
+          </tr>
+          <tr>
+            <td>set</td>
+            <td>list (for lookup)</td>
+          </tr>
+          <tr>
+            <td>dict</td>
+            <td>multiple if-else</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>5. List Comprehension vs Loop</h2>
+
+        <div class="code">
+          # Slower<br />
+          result = []<br />
+          for i in range(10):<br />
+          &nbsp;&nbsp;result.append(i*i)<br /><br />
+          # Faster<br />
+          result = [i*i for i in range(10)]
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>6. Profiling with time Module</h2>
+
+        <div class="code">
+          import time<br /><br />
+          start = time.time()<br />
+          # code here<br />
+          end = time.time()<br />
+          print("Time:", end - start)
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>7. Profiling with cProfile</h2>
+
+        <div class="code">
+          import cProfile<br /><br />
+          def test():<br />
+          &nbsp;&nbsp;for i in range(100000):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;i * i<br /><br />
+          cProfile.run("test()")
+        </div>
+
+        <div class="note">Shows function-wise execution time.</div>
+      </div>
+
+      <div class="section">
+        <h2>8. Avoid Premature Optimization</h2>
+        <p>First write clean code, then optimize only bottlenecks.</p>
+
+        <div class="warning">
+          Optimization without profiling can make code worse.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>9. Caching with lru_cache</h2>
+
+        <div class="code">
+          from functools import lru_cache<br /><br />
+          @lru_cache(maxsize=None)<br />
+          def fib(n):<br />
+          &nbsp;&nbsp;if n < 2:<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return n<br />
+          &nbsp;&nbsp;return fib(n-1) + fib(n-2)
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>10. Performance Tips</h2>
+        <ul>
+          <li>Use generators for large data</li>
+          <li>Avoid global variables</li>
+          <li>Minimize disk & network I/O</li>
+          <li>Profile before optimizing</li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Compare loop vs list comprehension</li>
+          <li>Profile a slow function</li>
+          <li>Optimize Fibonacci using cache</li>
+          <li>Explain Big-O in interview</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Performance optimization in Python starts with profiling, choosing
+          efficient data structures, and optimizing only real bottlenecks
+        </p>
+        <p>
+          <strong>Lesson 31:</strong> Python Security Basics & Best Practices
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

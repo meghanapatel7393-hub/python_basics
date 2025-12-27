@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PATH 2 – Lesson 16 | Flask Email & Notifications</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 2: Django / Flask / FastAPI</h1>
+      <h2>Phase 3 – Flask Advanced</h2>
+      <h3>Lesson 16: Flask Email Sending & Notifications</h3>
+
+      <div class="section">
+        <h2>1. Why Email Notifications?</h2>
+        <p>
+          Sending emails is essential for user verification, password reset, and
+          notifications in web apps.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>2. Setting Up Flask-Mail</h2>
+
+        <div class="code">pip install Flask-Mail</div>
+
+        <div class="note">
+          Flask-Mail is a simple extension for sending emails from Flask
+          applications.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. Configuring Flask-Mail</h2>
+
+        <div class="code">
+          from flask import Flask<br />
+          from flask_mail import Mail, Message<br /><br />
+          app = Flask(__name__)<br />
+          app.config["MAIL_SERVER"] = "smtp.gmail.com"<br />
+          app.config["MAIL_PORT"] = 587<br />
+          app.config["MAIL_USE_TLS"] = True<br />
+          app.config["MAIL_USERNAME"] = "your_email@gmail.com"<br />
+          app.config["MAIL_PASSWORD"] = "your_app_password"<br />
+          mail = Mail(app)
+        </div>
+
+        <div class="note">
+          For Gmail, generate an App Password for security instead of using your
+          main password.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. Sending a Simple Email</h2>
+
+        <div class="code">
+          @app.route("/send-mail")<br />
+          def send_mail():<br />
+          &nbsp;&nbsp;msg = Message("Hello from Flask",<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;sender="your_email@gmail.com",<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;recipients=["recipient_email@gmail.com"])<br />
+          &nbsp;&nbsp;msg.body = "This is a test email from Flask."<br />
+          &nbsp;&nbsp;mail.send(msg)<br />
+          &nbsp;&nbsp;return "Email sent successfully!"
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. Notes & Best Practices</h2>
+        <ul>
+          <li>Never hardcode passwords; use environment variables.</li>
+          <li>
+            Use background tasks (Celery or Flask-RQ) for sending bulk emails.
+          </li>
+          <li>Ensure proper SMTP configuration for your email provider.</li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Send a test email to your own inbox</li>
+          <li>Create a contact form that emails submissions</li>
+          <li>Set up email notifications for user registration</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Flask-Mail allows sending emails via SMTP; use environment variables
+          and background tasks for security and efficiency
+        </p>
+        <p><strong>Lesson 17:</strong> Flask REST API Basics</p>
+      </div>
+    </div>
+  </body>
+</html>

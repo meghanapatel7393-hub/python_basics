@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PATH 2 – Lesson 14 | Flask User Authentication</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 2: Django / Flask / FastAPI</h1>
+      <h2>Phase 3 – Flask Advanced</h2>
+      <h3>Lesson 14: Flask User Authentication (Login & Registration)</h3>
+
+      <div class="section">
+        <h2>1. Why User Authentication?</h2>
+        <p>
+          Most web apps require users to register, login, and manage sessions
+          securely.
+        </p>
+        <div class="note">
+          Authentication ensures only authorized users can access certain
+          features.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. Database Setup (SQLite Example)</h2>
+
+        <div class="code">
+          from flask_sqlalchemy import SQLAlchemy<br />
+          from werkzeug.security import generate_password_hash,
+          check_password_hash<br />
+          <br />
+          db = SQLAlchemy(app)<br />
+          <br />
+          class User(db.Model):<br />
+          &nbsp;&nbsp;id = db.Column(db.Integer, primary_key=True)<br />
+          &nbsp;&nbsp;username = db.Column(db.String(80), unique=True,
+          nullable=False)<br />
+          &nbsp;&nbsp;email = db.Column(db.String(120), unique=True,
+          nullable=False)<br />
+          &nbsp;&nbsp;password = db.Column(db.String(200), nullable=False)
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. Registration Route</h2>
+
+        <div class="code">
+          @app.route("/register", methods=["GET", "POST"])<br />
+          def register():<br />
+          &nbsp;&nbsp;if request.method == "POST":<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;username = request.form["username"]<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;email = request.form["email"]<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;password =
+          generate_password_hash(request.form["password"])<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;user = User(username=username, email=email,
+          password=password)<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;db.session.add(user)<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;db.session.commit()<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return "User registered successfully!"<br />
+          &nbsp;&nbsp;return render_template("register.html")
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. Login Route</h2>
+
+        <div class="code">
+          from flask import session<br /><br />
+          @app.route("/login", methods=["GET", "POST"])<br />
+          def login():<br />
+          &nbsp;&nbsp;if request.method == "POST":<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;user =
+          User.query.filter_by(username=request.form["username"]).first()<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;if user and check_password_hash(user.password,
+          request.form["password"]):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;session["user_id"] = user.id<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return "Logged in
+          successfully!"<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return "Invalid credentials"<br />
+          &nbsp;&nbsp;return render_template("login.html")
+        </div>
+
+        <div class="note">
+          Uses session to store logged-in user information.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. Logout Route</h2>
+
+        <div class="code">
+          @app.route("/logout")<br />
+          def logout():<br />
+          &nbsp;&nbsp;session.pop("user_id", None)<br />
+          &nbsp;&nbsp;return "Logged out successfully!"
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>6. Notes & Best Practices</h2>
+        <ul>
+          <li>
+            Always hash passwords with <code>generate_password_hash</code>
+          </li>
+          <li>Use <code>check_password_hash</code> to verify passwords</li>
+          <li>Use Flask sessions or Flask-Login for managing user sessions</li>
+          <li>Validate user input to prevent SQL injection or other attacks</li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Create registration and login forms</li>
+          <li>Store users in SQLite with hashed passwords</li>
+          <li>Implement session-based login/logout</li>
+          <li>Restrict certain routes to logged-in users only</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Flask user authentication uses hashed passwords and sessions to manage
+          secure login, logout, and registration processes.
+        </p>
+        <p><strong>Lesson 15:</strong> Flask Sessions & Cookies</p>
+      </div>
+    </div>
+  </body>
+</html>

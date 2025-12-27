@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PATH 2 – Lesson 22 | Flask REST API Sorting & Ordering</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 2: Django / Flask / FastAPI</h1>
+      <h2>Phase 4 – Flask REST API</h2>
+      <h3>Lesson 22: Flask REST API Sorting & Ordering</h3>
+
+      <div class="section">
+        <h2>1. Why Sorting & Ordering?</h2>
+        <p>
+          Sorting allows clients to receive API data in a specific order, e.g.,
+          ascending, descending, by creation date, or by name.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>2. Sorting Example with SQLAlchemy</h2>
+
+        <div class="code">
+          @app.route("/todos/sort", methods=["GET"])<br />
+          def sort_todos():<br />
+          &nbsp;&nbsp;order_by = request.args.get("order_by", "id")<br />
+          &nbsp;&nbsp;direction = request.args.get("direction", "asc")<br />
+          &nbsp;&nbsp;if direction == "desc":<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;todos_sorted =
+          Todo.query.order_by(getattr(Todo, order_by).desc()).all()<br />
+          &nbsp;&nbsp;else:<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;todos_sorted =
+          Todo.query.order_by(getattr(Todo, order_by).asc()).all()<br />
+          &nbsp;&nbsp;result = [{"id": t.id, "task": t.task} for t in
+          todos_sorted]<br />
+          &nbsp;&nbsp;return jsonify(result)
+        </div>
+
+        <div class="note">
+          Clients can pass <code>?order_by=task&direction=desc</code> to get
+          descending order by task.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. Notes & Best Practices</h2>
+        <ul>
+          <li>Validate <code>order_by</code> field to prevent SQL injection</li>
+          <li>Combine with pagination and filtering for large datasets</li>
+          <li>Provide default sorting if parameters are missing</li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Implement sorting by task name, ID, or creation date</li>
+          <li>Allow ascending and descending order using query params</li>
+          <li>Combine with pagination endpoint</li>
+          <li>Test sorting using Postman</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Flask REST API sorting allows clients to control the order of results
+          via query parameters and SQLAlchemy ordering functions.
+        </p>
+        <p><strong>Lesson 23:</strong> Flask REST API Search Functionality</p>
+      </div>
+    </div>
+  </body>
+</html>

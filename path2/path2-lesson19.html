@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PATH 2 – Lesson 19 | Flask REST API Authentication & JWT</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 2: Django / Flask / FastAPI</h1>
+      <h2>Phase 4 – Flask REST API</h2>
+      <h3>Lesson 19: Flask REST API with Authentication & JWT</h3>
+
+      <div class="section">
+        <h2>1. Why JWT Authentication?</h2>
+        <p>
+          JWT (JSON Web Token) allows secure, stateless authentication for REST
+          APIs. Each request carries a token instead of session data.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>2. Installing Required Packages</h2>
+
+        <div class="code">pip install Flask-JWT-Extended</div>
+      </div>
+
+      <div class="section">
+        <h2>3. Configuring JWT in Flask</h2>
+
+        <div class="code">
+          from flask import Flask, jsonify, request<br />
+          from flask_sqlalchemy import SQLAlchemy<br />
+          from flask_jwt_extended import JWTManager, create_access_token,
+          jwt_required, get_jwt_identity<br /><br />
+          app = Flask(__name__)<br />
+          app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"<br />
+          app.config["JWT_SECRET_KEY"] = "your_jwt_secret"<br />
+          db = SQLAlchemy(app)<br />
+          jwt = JWTManager(app)
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. User Model</h2>
+
+        <div class="code">
+          class User(db.Model):<br />
+          &nbsp;&nbsp;id = db.Column(db.Integer, primary_key=True)<br />
+          &nbsp;&nbsp;username = db.Column(db.String(80), unique=True,
+          nullable=False)<br />
+          &nbsp;&nbsp;password = db.Column(db.String(200), nullable=False)<br /><br />
+          with app.app_context():<br />
+          &nbsp;&nbsp;db.create_all()
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. Register Route</h2>
+
+        <div class="code">
+          @app.route("/register", methods=["POST"])<br />
+          def register():<br />
+          &nbsp;&nbsp;data = request.get_json()<br />
+          &nbsp;&nbsp;user = User(username=data["username"],
+          password=data["password"]) # Hash in real app<br />
+          &nbsp;&nbsp;db.session.add(user)<br />
+          &nbsp;&nbsp;db.session.commit()<br />
+          &nbsp;&nbsp;return jsonify({"message": "User registered"})
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>6. Login Route with JWT</h2>
+
+        <div class="code">
+          @app.route("/login", methods=["POST"])<br />
+          def login():<br />
+          &nbsp;&nbsp;data = request.get_json()<br />
+          &nbsp;&nbsp;user =
+          User.query.filter_by(username=data["username"]).first()<br />
+          &nbsp;&nbsp;if user and user.password == data["password"]: # Check
+          hash in real app<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;access_token =
+          create_access_token(identity=user.id)<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return jsonify({"access_token":
+          access_token})<br />
+          &nbsp;&nbsp;return jsonify({"error": "Invalid credentials"}), 401
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>7. Protected Route</h2>
+
+        <div class="code">
+          @app.route("/profile", methods=["GET"])<br />
+          @jwt_required()<br />
+          def profile():<br />
+          &nbsp;&nbsp;user_id = get_jwt_identity()<br />
+          &nbsp;&nbsp;user = User.query.get(user_id)<br />
+          &nbsp;&nbsp;return jsonify({"id": user.id, "username": user.username})
+        </div>
+
+        <div class="note">
+          Use the token in Authorization header:
+          <code>Bearer &lt;access_token&gt;</code>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>8. Notes & Best Practices</h2>
+        <ul>
+          <li>Always hash passwords before storing</li>
+          <li>Use HTTPS in production for secure token transmission</li>
+          <li>JWT tokens can include expiration for enhanced security</li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Implement registration and login using JWT</li>
+          <li>
+            Create a protected route that only authenticated users can access
+          </li>
+          <li>Test with Postman by sending token in Authorization header</li>
+          <li>Add token expiration and refresh functionality (optional)</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Flask JWT authentication allows stateless, secure REST API access,
+          with tokens verifying identity instead of sessions.
+        </p>
+        <p>
+          <strong>Lesson 20:</strong> Flask REST API with Role-Based Access
+          Control
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

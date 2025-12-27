@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PATH 2 – Lesson 13 | Flask File Uploads & Media</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 2: Django / Flask / FastAPI</h1>
+      <h2>Phase 3 – Flask Advanced</h2>
+      <h3>Lesson 13: Flask File Uploads & Handling Media</h3>
+
+      <div class="section">
+        <h2>1. Why File Uploads?</h2>
+        <p>
+          Many apps require users to upload files such as images, PDFs, or
+          documents.
+        </p>
+        <div class="note">
+          Flask provides simple ways to handle file uploads and save them on the
+          server.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. HTML Form for File Upload</h2>
+
+        <div class="code">
+          &lt;form method="POST" action="/upload"
+          enctype="multipart/form-data"&gt;<br />
+          &nbsp;&nbsp;&lt;input type="file" name="file"&gt;<br />
+          &nbsp;&nbsp;&lt;input type="submit" value="Upload"&gt;<br />
+          &lt;/form&gt;
+        </div>
+
+        <div class="note">
+          <code>enctype="multipart/form-data"</code> is required for file
+          uploads.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. Flask Route to Handle Upload</h2>
+
+        <div class="code">
+          from flask import Flask, request, redirect, url_for<br />
+          import os<br />
+          app = Flask(__name__)<br /><br />
+          UPLOAD_FOLDER = "uploads"<br />
+          app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER<br /><br />
+          @app.route("/upload", methods=["GET", "POST"])<br />
+          def upload_file():<br />
+          &nbsp;&nbsp;if request.method == "POST":<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;file = request.files["file"]<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;if file.filename != "":<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file.save(os.path.join(app.config["UPLOAD_FOLDER"],
+          file.filename))<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return "File uploaded
+          successfully!"<br />
+          &nbsp;&nbsp;return ''' &lt;form method="POST"
+          enctype="multipart/form-data"&gt; &lt;input type="file"
+          name="file"&gt; &lt;input type="submit"&gt; &lt;/form&gt; '''
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. Notes & Best Practices</h2>
+        <ul>
+          <li>Create the <code>uploads</code> folder before uploading files</li>
+          <li>
+            Validate file extensions for security (<code>jpg, png, pdf</code>)
+          </li>
+          <li>
+            Use <code>secure_filename</code> from <code>werkzeug.utils</code> to
+            prevent unsafe filenames
+          </li>
+          <li>
+            Limit file size using <code>app.config["MAX_CONTENT_LENGTH"]</code>
+          </li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>5. Using secure_filename</h2>
+
+        <div class="code">
+          from werkzeug.utils import secure_filename<br /><br />
+          filename = secure_filename(file.filename)<br />
+          file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+        </div>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Create a form to upload images</li>
+          <li>Save uploaded images to <code>uploads</code> folder</li>
+          <li>Display uploaded images on a page</li>
+          <li>Validate allowed file types (e.g., jpg, png)</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Flask file uploads require multipart forms, secure filenames, and
+          optional file validation to safely handle user media
+        </p>
+        <p>
+          <strong>Lesson 14:</strong> Flask User Authentication (Login &
+          Registration)
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

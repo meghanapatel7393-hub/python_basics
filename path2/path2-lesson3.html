@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PATH 2 – Lesson 3 | Flask Installation & First App</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 2: Django / Flask / FastAPI</h1>
+      <h2>Phase 2 – Flask Basics</h2>
+      <h3>Lesson 3: Flask Installation & First App</h3>
+
+      <div class="section">
+        <h2>1. What is Flask?</h2>
+        <p>
+          Flask is a lightweight Python web framework that helps you build web
+          apps and APIs quickly.
+        </p>
+
+        <div class="note">
+          Flask is called a "micro-framework" because it does not include ORM or
+          built-in authentication.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. Install Flask</h2>
+
+        <div class="code">
+          # Create virtual environment<br />
+          python -m venv venv<br /><br />
+          # Activate environment<br />
+          # Windows: venv\Scripts\activate<br />
+          # Linux/Mac: source venv/bin/activate<br /><br />
+          # Install Flask<br />
+          pip install Flask
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. First Flask App</h2>
+
+        <div class="code">
+          from flask import Flask<br />
+          <br />
+          app = Flask(__name__)<br />
+          <br />
+          @app.route("/")<br />
+          def home():<br />
+          &nbsp;&nbsp;return "Hello, Flask!"<br />
+          <br />
+          if __name__ == "__main__":<br />
+          &nbsp;&nbsp;app.run(debug=True)
+        </div>
+
+        <div class="note">
+          <strong>@app.route("/")</strong> defines a URL endpoint.<br />
+          <strong>debug=True</strong> enables auto-reload and error messages.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. Run the App</h2>
+
+        <div class="code">python app.py</div>
+
+        <div class="note">
+          Open browser → <code>http://127.0.0.1:5000/</code> → You will see
+          "Hello, Flask!"
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. Flask App Structure (Simple)</h2>
+
+        <div class="code">
+          project_folder/<br />
+          │── app.py<br />
+          │── venv/<br />
+          │── requirements.txt
+        </div>
+
+        <div class="note">
+          Small projects can have just one file. Larger projects use folders &
+          templates.
+        </div>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Create a virtual environment and install Flask</li>
+          <li>Write your first Flask app with a "/" route</li>
+          <li>Test in browser</li>
+          <li>Try adding a second route like "/about"</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Flask is a lightweight Python framework to build web apps and REST
+          APIs with minimal setup and maximum flexibility.
+        </p>
+        <p><strong>Lesson 4:</strong> Flask Routing & URL Parameters</p>
+      </div>
+    </div>
+  </body>
+</html>

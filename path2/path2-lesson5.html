@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PATH 2 – Lesson 5 | Flask Templates & Rendering HTML</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 2: Django / Flask / FastAPI</h1>
+      <h2>Phase 2 – Flask Basics</h2>
+      <h3>Lesson 5: Flask Templates & Rendering HTML</h3>
+
+      <div class="section">
+        <h2>1. What are Templates?</h2>
+        <p>
+          Templates are HTML files used to separate design (frontend) from
+          Python code (backend).
+        </p>
+
+        <div class="note">
+          Flask uses <strong>Jinja2</strong> template engine by default.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. Flask Template Folder</h2>
+
+        <div class="code">
+          project_folder/<br />
+          │── app.py<br />
+          │── templates/<br />
+          │&nbsp;&nbsp;&nbsp;&nbsp;index.html<br />
+          │&nbsp;&nbsp;&nbsp;&nbsp;about.html
+        </div>
+
+        <div class="note">
+          Flask automatically looks for templates inside
+          <code>templates/</code> folder.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. Rendering HTML</h2>
+
+        <div class="code">
+          from flask import Flask, render_template<br />
+          app = Flask(__name__)<br /><br />
+          @app.route("/")<br />
+          def home():<br />
+          &nbsp;&nbsp;return render_template("index.html")
+        </div>
+
+        <div class="note">
+          Flask renders <code>index.html</code> from templates folder.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. Passing Data to Template</h2>
+
+        <div class="code">
+          @app.route("/user/&lt;name&gt;")<br />
+          def user(name):<br />
+          &nbsp;&nbsp;return render_template("user.html", username=name)
+        </div>
+
+        <div class="note">
+          <code>username=name</code> passes data to HTML template.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. Using Variables in Template</h2>
+
+        <div class="code">
+          &lt;!-- user.html --&gt;<br />
+          &lt;h1&gt;Hello, {{ username }}!&lt;/h1&gt;
+        </div>
+
+        <div class="note">
+          <strong>{{ username }}</strong> is replaced by the value passed from
+          Flask.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>6. Control Structures in Templates</h2>
+
+        <div class="code">
+          &lt;ul&gt;<br />
+          {% for item in items %}<br />
+          &nbsp;&nbsp;&lt;li&gt;{{ item }}&lt;/li&gt;<br />
+          {% endfor %}<br />
+          &lt;/ul&gt;
+        </div>
+
+        <div class="note">
+          You can use loops and conditionals inside templates using Jinja2
+          syntax.
+        </div>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Create <code>index.html</code> template and render from Flask</li>
+          <li>Pass a variable and display using <code>{{ }}</code></li>
+          <li>
+            Create a list in Flask and display using <code>{% for %}</code> loop
+          </li>
+          <li>Try using <code>{% if %}</code> conditionals</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Flask templates (Jinja2) separate HTML design from Python logic,
+          allowing dynamic content rendering and loops/conditionals.
+        </p>
+        <p><strong>Lesson 6:</strong> Flask Forms & Handling User Input</p>
+      </div>
+    </div>
+  </body>
+</html>

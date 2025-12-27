@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path 1 – Lesson 32 | Deployment Basics</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .warning {
+        background: #fff7ed;
+        padding: 12px;
+        border-left: 5px solid #ea580c;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+      th,
+      td {
+        border: 1px solid #d1d5db;
+        padding: 10px;
+      }
+      th {
+        background-color: #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 1: Python Interview Preparation</h1>
+      <h2>Phase 6 – Deployment & Production</h2>
+      <h3>Lesson 32: Python Deployment Basics & Production Readiness</h3>
+
+      <div class="section">
+        <h2>1. What is Deployment?</h2>
+        <p>
+          Deployment means making your Python application available to real
+          users in a production environment.
+        </p>
+
+        <div class="note">Development → Testing → Production</div>
+      </div>
+
+      <div class="section">
+        <h2>2. Development vs Production</h2>
+
+        <table>
+          <tr>
+            <th>Development</th>
+            <th>Production</th>
+          </tr>
+          <tr>
+            <td>Debug mode ON</td>
+            <td>Debug OFF</td>
+          </tr>
+          <tr>
+            <td>Local machine</td>
+            <td>Server</td>
+          </tr>
+          <tr>
+            <td>Frequent changes</td>
+            <td>Stable & monitored</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>3. Basic Deployment Steps</h2>
+        <ol>
+          <li>Prepare application</li>
+          <li>Set environment variables</li>
+          <li>Create virtual environment</li>
+          <li>Install dependencies</li>
+          <li>Run app using production server</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>4. Production Checklist</h2>
+        <ul>
+          <li>Debug mode OFF</li>
+          <li>Secrets in environment variables</li>
+          <li>Logging enabled</li>
+          <li>Error handling in place</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>5. WSGI Servers (Intro)</h2>
+        <p>Production Python web apps should not use built-in servers.</p>
+
+        <table>
+          <tr>
+            <th>Server</th>
+            <th>Use</th>
+          </tr>
+          <tr>
+            <td>Gunicorn</td>
+            <td>Linux deployment</td>
+          </tr>
+          <tr>
+            <td>uWSGI</td>
+            <td>High performance</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>6. Example: Gunicorn Command</h2>
+
+        <div class="code">gunicorn app:app</div>
+
+        <div class="note">app:app → filename:application object</div>
+      </div>
+
+      <div class="section">
+        <h2>7. Reverse Proxy (Intro)</h2>
+        <p>
+          Nginx or Apache is used as a reverse proxy in front of Python apps.
+        </p>
+
+        <div class="note">Handles SSL, static files, load balancing.</div>
+      </div>
+
+      <div class="section">
+        <h2>8. Logs & Monitoring</h2>
+        <ul>
+          <li>Enable file logging</li>
+          <li>Monitor errors</li>
+          <li>Track performance</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>9. Common Deployment Mistakes</h2>
+        <ul>
+          <li>Running debug in production</li>
+          <li>Hardcoded secrets</li>
+          <li>No monitoring</li>
+          <li>No backups</li>
+        </ul>
+
+        <div class="warning">Debug mode exposes sensitive information.</div>
+      </div>
+
+      <div class="section">
+        <h2>10. Simple Deployment Flow</h2>
+
+        <div class="code">
+          Code → Git → Server → Virtual Env → Install → Run
+        </div>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Prepare production checklist</li>
+          <li>Explain Gunicorn vs built-in server</li>
+          <li>Set environment variables</li>
+          <li>Explain deployment flow in interview</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>🎉 Path 1 Completed!</h2>
+        <p>You have completed the Python Core + Interview Preparation Path.</p>
+        <p>
+          Deployment makes Python applications production-ready by configuring
+          environments, using WSGI servers, and ensuring security and monitoring
+        </p>
+        <div class="note">
+          Next paths can include: Django, Flask, FastAPI, Data Science, or
+          System Design.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

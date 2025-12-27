@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PATH 2 – Lesson 9 | Flask CRUD Operations</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 2: Django / Flask / FastAPI</h1>
+      <h2>Phase 2 – Flask Basics</h2>
+      <h3>Lesson 9: Flask CRUD Operations</h3>
+
+      <div class="section">
+        <h2>1. What is CRUD?</h2>
+        <p>
+          CRUD stands for <strong>Create, Read, Update, Delete</strong>. These
+          are the basic operations in any database-driven application.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>2. Simple In-Memory Example</h2>
+
+        <div class="code">
+          from flask import Flask, jsonify, request<br />
+          app = Flask(__name__)<br /><br />
+          todos = [<br />
+          &nbsp;&nbsp;{"id": 1, "task": "Learn Flask"},<br />
+          &nbsp;&nbsp;{"id": 2, "task": "Build API"}<br />
+          ]<br /><br />
+          # Read all todos<br />
+          @app.route("/todos")<br />
+          def get_todos():<br />
+          &nbsp;&nbsp;return jsonify(todos)
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. Create (POST)</h2>
+
+        <div class="code">
+          @app.route("/todos", methods=["POST"])<br />
+          def add_todo():<br />
+          &nbsp;&nbsp;data = request.get_json()<br />
+          &nbsp;&nbsp;new_todo = {"id": len(todos)+1, "task": data["task"]}<br />
+          &nbsp;&nbsp;todos.append(new_todo)<br />
+          &nbsp;&nbsp;return jsonify(new_todo)
+        </div>
+
+        <div class="note">Use POST request to add a new todo.</div>
+      </div>
+
+      <div class="section">
+        <h2>4. Update (PUT)</h2>
+
+        <div class="code">
+          @app.route("/todos/&lt;int:id&gt;", methods=["PUT"])<br />
+          def update_todo(id):<br />
+          &nbsp;&nbsp;data = request.get_json()<br />
+          &nbsp;&nbsp;for todo in todos:<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;if todo["id"] == id:<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;todo["task"] = data["task"]<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return jsonify(todo)<br />
+          &nbsp;&nbsp;return jsonify({"error": "Todo not found"}), 404
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. Delete (DELETE)</h2>
+
+        <div class="code">
+          @app.route("/todos/&lt;int:id&gt;", methods=["DELETE"])<br />
+          def delete_todo(id):<br />
+          &nbsp;&nbsp;for todo in todos:<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;if todo["id"] == id:<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;todos.remove(todo)<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return jsonify({"message":
+          "Deleted"})<br />
+          &nbsp;&nbsp;return jsonify({"error": "Todo not found"}), 404
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>6. Notes</h2>
+        <ul>
+          <li>In-memory data is temporary; restarting server clears it.</li>
+          <li>
+            For real apps, connect Flask with a database like SQLite, MySQL, or
+            MongoDB.
+          </li>
+          <li>
+            CRUD operations map to HTTP methods: POST → Create, GET → Read, PUT
+            → Update, DELETE → Delete
+          </li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Build a simple Todo CRUD API using Flask</li>
+          <li>Test with Postman or curl</li>
+          <li>Add validation to prevent empty tasks</li>
+          <li>Try updating and deleting specific todos</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Flask CRUD APIs handle Create, Read, Update, and Delete operations,
+          typically mapping to POST, GET, PUT, and DELETE HTTP methods
+        </p>
+        <p><strong>Lesson 10:</strong> Flask with Database (SQLite/MySQL)</p>
+      </div>
+    </div>
+  </body>
+</html>

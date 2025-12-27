@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PATH 2 – Lesson 8 | Flask REST API Basics</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 2: Django / Flask / FastAPI</h1>
+      <h2>Phase 2 – Flask Basics</h2>
+      <h3>Lesson 8: Flask REST API Basics – JSON Response</h3>
+
+      <div class="section">
+        <h2>1. What is REST API?</h2>
+        <p>
+          REST API allows clients (like browsers or mobile apps) to communicate
+          with a server using HTTP requests and receive structured data (JSON).
+        </p>
+
+        <div class="note">
+          REST APIs are widely used in modern web applications.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. JSON Response in Flask</h2>
+
+        <div class="code">
+          from flask import Flask, jsonify<br />
+          app = Flask(__name__)<br /><br />
+          @app.route("/api")<br />
+          def api():<br />
+          &nbsp;&nbsp;data = { "name": "Bhavesh", "role": "Backend Developer"
+          }<br />
+          &nbsp;&nbsp;return jsonify(data)
+        </div>
+
+        <div class="note">
+          Visiting <code>/api</code> returns JSON:
+          <code>{"name": "Bhavesh", "role": "Backend Developer"}</code>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. REST API with Dynamic Parameters</h2>
+
+        <div class="code">
+          @app.route("/api/user/&lt;username&gt;")<br />
+          def get_user(username):<br />
+          &nbsp;&nbsp;data = { "user": username, "status": "active" }<br />
+          &nbsp;&nbsp;return jsonify(data)
+        </div>
+
+        <div class="note">
+          Visit <code>/api/user/Bhavesh</code> →
+          <code>{"user": "Bhavesh", "status": "active"}</code>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. HTTP Methods with REST API</h2>
+
+        <div class="code">
+          from flask import request<br />
+          <br />
+          @app.route("/api/data", methods=["POST"])<br />
+          def post_data():<br />
+          &nbsp;&nbsp;data = request.get_json()<br />
+          &nbsp;&nbsp;return jsonify({ "received": data })
+        </div>
+
+        <div class="note">
+          You can send JSON from client and receive it in Flask using
+          <code>request.get_json()</code>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. Mini Example – Todo API</h2>
+
+        <div class="code">
+          todos = [<br />
+          &nbsp;&nbsp;{"id": 1, "task": "Learn Flask"},<br />
+          &nbsp;&nbsp;{"id": 2, "task": "Build API"}<br />
+          ]<br />
+          <br />
+          @app.route("/api/todos")<br />
+          def get_todos():<br />
+          &nbsp;&nbsp;return jsonify(todos)
+        </div>
+
+        <div class="note">
+          Visit <code>/api/todos</code> → returns list of tasks in JSON format
+        </div>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Create a JSON API that returns your name and age</li>
+          <li>Create a dynamic route returning JSON for different usernames</li>
+          <li>Create a POST API to receive data and return confirmation</li>
+          <li>Build a mini Todo API with list of tasks</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Flask REST APIs return structured JSON data, which allows frontends or
+          mobile apps to communicate with the server via HTTP methods.
+        </p>
+        <p>
+          <strong>Lesson 9:</strong> Flask CRUD Operations (Create, Read,
+          Update, Delete)
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

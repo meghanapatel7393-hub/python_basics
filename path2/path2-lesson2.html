@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PATH 2 – Lesson 2 | Backend & REST API</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 2: Django / Flask / FastAPI</h1>
+      <h2>Phase 1 – Web Fundamentals</h2>
+      <h3>Lesson 2: What is Backend & REST API</h3>
+
+      <div class="section">
+        <h2>1. Backend Overview</h2>
+        <p>Backend is the server-side part of a web application that:</p>
+        <ul>
+          <li>Processes requests from clients</li>
+          <li>Performs business logic</li>
+          <li>Handles database operations</li>
+          <li>Returns responses to clients</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>2. Frontend vs Backend</h2>
+
+        <table>
+          <tr>
+            <th>Frontend</th>
+            <th>Backend</th>
+          </tr>
+          <tr>
+            <td>HTML, CSS, JS</td>
+            <td>Python, Node.js, Java</td>
+          </tr>
+          <tr>
+            <td>User interface</td>
+            <td>Server logic & database</td>
+          </tr>
+          <tr>
+            <td>Runs in browser</td>
+            <td>Runs on server</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>3. What is REST API?</h2>
+        <p>
+          REST (Representational State Transfer) API is a way for a client to
+          communicate with a server using HTTP methods.
+        </p>
+
+        <div class="note">
+          REST API allows frontend and backend to be separate.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. HTTP Methods in REST</h2>
+        <ul>
+          <li><strong>GET:</strong> Read data</li>
+          <li><strong>POST:</strong> Create data</li>
+          <li><strong>PUT/PATCH:</strong> Update data</li>
+          <li><strong>DELETE:</strong> Delete data</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>5. REST API Example</h2>
+
+        <div class="code">
+          GET /users → Get list of users<br />
+          POST /users → Create a new user<br />
+          PUT /users/1 → Update user with ID 1<br />
+          DELETE /users/1 → Delete user with ID 1
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>6. Why REST API?</h2>
+        <ul>
+          <li>Separation of frontend and backend</li>
+          <li>Supports multiple clients (web, mobile)</li>
+          <li>Stateless & scalable</li>
+          <li>Industry standard</li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Explain frontend vs backend</li>
+          <li>List HTTP methods and their purpose</li>
+          <li>
+            Draw a simple REST API flow (Client → Server → Database → Client)
+          </li>
+          <li>Give examples of endpoints</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          REST APIs allow the frontend to communicate with backend servers using
+          standard HTTP methods in a stateless and scalable way.
+        </p>
+        <p><strong>Lesson 3:</strong> Flask Installation & First App</p>
+      </div>
+    </div>
+  </body>
+</html>

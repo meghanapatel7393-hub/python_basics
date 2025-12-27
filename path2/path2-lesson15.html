@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PATH 2 – Lesson 15 | Flask Sessions & Cookies</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 2: Django / Flask / FastAPI</h1>
+      <h2>Phase 3 – Flask Advanced</h2>
+      <h3>Lesson 15: Flask Sessions & Cookies</h3>
+
+      <div class="section">
+        <h2>1. What are Sessions & Cookies?</h2>
+        <p>
+          - <strong>Cookies:</strong> Small data stored on client-side
+          (browser).<br />
+          - <strong>Sessions:</strong> Server-side storage linked to a client
+          via session ID (usually stored in a cookie).
+        </p>
+        <div class="note">
+          Sessions are more secure as sensitive info is stored on the server,
+          not the client.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. Setting Up Flask Session</h2>
+
+        <div class="code">
+          from flask import Flask, session, redirect, url_for, request<br />
+          app = Flask(__name__)<br />
+          app.secret_key = "your_secret_key" # Required for session management
+        </div>
+
+        <div class="note">Secret key is needed to encrypt session data.</div>
+      </div>
+
+      <div class="section">
+        <h2>3. Storing Data in Session</h2>
+
+        <div class="code">
+          @app.route("/login", methods=["POST"])<br />
+          def login():<br />
+          &nbsp;&nbsp;username = request.form["username"]<br />
+          &nbsp;&nbsp;session["username"] = username # Store username in
+          session<br />
+          &nbsp;&nbsp;return f"Logged in as {username}"
+        </div>
+
+        <div class="note">
+          Data stored in <code>session</code> is preserved across requests until
+          cleared or expired.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. Accessing Session Data</h2>
+
+        <div class="code">
+          @app.route("/profile")<br />
+          def profile():<br />
+          &nbsp;&nbsp;if "username" in session:<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return f"Welcome {session['username']}"<br />
+          &nbsp;&nbsp;return "You are not logged in"
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. Clearing Session Data (Logout)</h2>
+
+        <div class="code">
+          @app.route("/logout")<br />
+          def logout():<br />
+          &nbsp;&nbsp;session.pop("username", None)<br />
+          &nbsp;&nbsp;return "Logged out successfully"
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>6. Using Cookies</h2>
+
+        <div class="code">
+          from flask import make_response<br /><br />
+          @app.route("/setcookie")<br />
+          def set_cookie():<br />
+          &nbsp;&nbsp;resp = make_response("Cookie is set")<br />
+          &nbsp;&nbsp;resp.set_cookie("username", "Bhavesh")<br />
+          &nbsp;&nbsp;return resp<br /><br />
+          @app.route("/getcookie")<br />
+          def get_cookie():<br />
+          &nbsp;&nbsp;username = request.cookies.get("username")<br />
+          &nbsp;&nbsp;return f"Username from cookie: {username}"
+        </div>
+
+        <div class="note">
+          Cookies are stored on the client and can be read by the browser or
+          server.
+        </div>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Create a login form that saves username in session</li>
+          <li>Create a profile page showing session data</li>
+          <li>Implement logout that clears session</li>
+          <li>Set and get cookies for username or theme preference</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Flask sessions store sensitive data server-side, while cookies store
+          small data on client-side; both are used to maintain state across
+          requests.
+        </p>
+        <p><strong>Lesson 16:</strong> Flask Email Sending & Notifications</p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path 1 – Lesson 31 | Python Security Basics</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .warning {
+        background: #fff7ed;
+        padding: 12px;
+        border-left: 5px solid #ea580c;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+      th,
+      td {
+        border: 1px solid #d1d5db;
+        padding: 10px;
+      }
+      th {
+        background-color: #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 1: Python Interview Preparation</h1>
+      <h2>Phase 5 – Security & Production Readiness</h2>
+      <h3>Lesson 31: Python Security Basics & Best Practices</h3>
+
+      <div class="section">
+        <h2>1. Why Security Matters?</h2>
+        <ul>
+          <li>Protect user data</li>
+          <li>Prevent hacking & data leaks</li>
+          <li>Maintain trust</li>
+          <li>Critical for production systems</li>
+        </ul>
+
+        <div class="note">
+          Security is not optional — it is mandatory in real-world applications.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. Common Security Risks</h2>
+
+        <table>
+          <tr>
+            <th>Risk</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>Hardcoded secrets</td>
+            <td>Passwords/API keys in code</td>
+          </tr>
+          <tr>
+            <td>Injection attacks</td>
+            <td>SQL or command injection</td>
+          </tr>
+          <tr>
+            <td>Insecure inputs</td>
+            <td>No input validation</td>
+          </tr>
+          <tr>
+            <td>Weak passwords</td>
+            <td>Plain text storage</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>3. Never Hardcode Secrets</h2>
+
+        <div class="warning">
+          Hardcoding passwords is a serious security issue.
+        </div>
+
+        <div class="code">
+          # ❌ Wrong<br />
+          DB_PASSWORD = "mypassword"<br /><br />
+          # ✅ Correct<br />
+          import os<br />
+          DB_PASSWORD = os.getenv("DB_PASSWORD")
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. Use Environment Variables</h2>
+
+        <div class="code">export DB_PASSWORD="secret123"</div>
+
+        <div class="note">
+          Environment variables keep secrets outside source code.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. Password Hashing</h2>
+        <p>Never store passwords in plain text. Always hash them.</p>
+
+        <div class="code">
+          import hashlib<br /><br />
+          password = "mypassword"<br />
+          hashed = hashlib.sha256(password.encode()).hexdigest()<br />
+          print(hashed)
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>6. Input Validation</h2>
+
+        <div class="code">
+          age = input("Enter age: ")<br />
+          if not age.isdigit():<br />
+          &nbsp;&nbsp;print("Invalid input")
+        </div>
+
+        <div class="note">Validate all user inputs to prevent attacks.</div>
+      </div>
+
+      <div class="section">
+        <h2>7. Avoid eval()</h2>
+
+        <div class="warning">eval() can execute malicious code.</div>
+
+        <div class="code">
+          # ❌ Dangerous<br />
+          eval("2 + 2")<br /><br />
+          # ✅ Safe<br />
+          int("2") + int("2")
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>8. Secure File Handling</h2>
+
+        <div class="code">
+          with open("data.txt", "r") as file:<br />
+          &nbsp;&nbsp;content = file.read()
+        </div>
+
+        <div class="note">Always close files properly to avoid leaks.</div>
+      </div>
+
+      <div class="section">
+        <h2>9. Use HTTPS & Secure Libraries</h2>
+        <ul>
+          <li>Always use HTTPS</li>
+          <li>Use trusted libraries</li>
+          <li>Update dependencies regularly</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>10. Security Best Practices</h2>
+        <ul>
+          <li>Follow least privilege principle</li>
+          <li>Log security events</li>
+          <li>Handle errors safely</li>
+          <li>Review code for vulnerabilities</li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Store secret using environment variable</li>
+          <li>Hash a password</li>
+          <li>Validate user input</li>
+          <li>Explain Python security basics in interview</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Python security focuses on protecting data by avoiding hardcoded
+          secrets, validating input, hashing passwords, and following best
+          practices.
+        </p>
+        <p>
+          <strong>Lesson 32:</strong> Python Deployment Basics (Production
+          Readiness)
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

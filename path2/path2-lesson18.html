@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PATH 2 – Lesson 18 | Flask REST API with Database</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 2: Django / Flask / FastAPI</h1>
+      <h2>Phase 4 – Flask REST API</h2>
+      <h3>Lesson 18: Flask REST API with Database Integration</h3>
+
+      <div class="section">
+        <h2>1. Why Database Integration?</h2>
+        <p>
+          Storing API data in a database ensures persistence across server
+          restarts and allows scalability.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>2. Setting Up SQLAlchemy</h2>
+
+        <div class="code">
+          from flask import Flask, request, jsonify<br />
+          from flask_sqlalchemy import SQLAlchemy<br />
+          <br />
+          app = Flask(__name__)<br />
+          app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///todos.db"<br />
+          app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False<br />
+          db = SQLAlchemy(app)
+        </div>
+
+        <div class="note">
+          SQLAlchemy is an ORM that maps Python objects to database tables.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. Creating a Database Model</h2>
+
+        <div class="code">
+          class Todo(db.Model):<br />
+          &nbsp;&nbsp;id = db.Column(db.Integer, primary_key=True)<br />
+          &nbsp;&nbsp;task = db.Column(db.String(200), nullable=False)<br />
+          <br />
+          # Create database tables<br />
+          with app.app_context():<br />
+          &nbsp;&nbsp;db.create_all()
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. GET Request – Fetch Todos</h2>
+
+        <div class="code">
+          @app.route("/todos", methods=["GET"])<br />
+          def get_todos():<br />
+          &nbsp;&nbsp;todos = Todo.query.all()<br />
+          &nbsp;&nbsp;result = [{"id": t.id, "task": t.task} for t in todos]<br />
+          &nbsp;&nbsp;return jsonify(result)
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. POST Request – Add Todo</h2>
+
+        <div class="code">
+          @app.route("/todos", methods=["POST"])<br />
+          def add_todo():<br />
+          &nbsp;&nbsp;data = request.get_json()<br />
+          &nbsp;&nbsp;new_todo = Todo(task=data["task"])<br />
+          &nbsp;&nbsp;db.session.add(new_todo)<br />
+          &nbsp;&nbsp;db.session.commit()<br />
+          &nbsp;&nbsp;return jsonify({"id": new_todo.id, "task":
+          new_todo.task}), 201
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>6. PUT Request – Update Todo</h2>
+
+        <div class="code">
+          @app.route("/todos/&lt;int:id&gt;", methods=["PUT"])<br />
+          def update_todo(id):<br />
+          &nbsp;&nbsp;todo = Todo.query.get(id)<br />
+          &nbsp;&nbsp;if not todo:<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return jsonify({"error": "Not found"}), 404<br />
+          &nbsp;&nbsp;data = request.get_json()<br />
+          &nbsp;&nbsp;todo.task = data["task"]<br />
+          &nbsp;&nbsp;db.session.commit()<br />
+          &nbsp;&nbsp;return jsonify({"id": todo.id, "task": todo.task})
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>7. DELETE Request – Remove Todo</h2>
+
+        <div class="code">
+          @app.route("/todos/&lt;int:id&gt;", methods=["DELETE"])<br />
+          def delete_todo(id):<br />
+          &nbsp;&nbsp;todo = Todo.query.get(id)<br />
+          &nbsp;&nbsp;if not todo:<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return jsonify({"error": "Not found"}), 404<br />
+          &nbsp;&nbsp;db.session.delete(todo)<br />
+          &nbsp;&nbsp;db.session.commit()<br />
+          &nbsp;&nbsp;return jsonify({"message": "Deleted"})
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>8. Notes & Best Practices</h2>
+        <ul>
+          <li>
+            Always commit session changes with <code>db.session.commit()</code>
+          </li>
+          <li>
+            Use <code>app.app_context()</code> when creating tables outside
+            routes
+          </li>
+          <li>Validate incoming JSON data for required fields</li>
+          <li>Consider using Marshmallow or Pydantic for schema validation</li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Create full CRUD API with SQLite database</li>
+          <li>Test endpoints using Postman or curl</li>
+          <li>Handle errors when data is missing or ID does not exist</li>
+          <li>Optional: Add timestamp field to todos</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Flask REST APIs integrated with SQLAlchemy allow persistent CRUD
+          operations, mapping Python objects to database tables for scalable
+          apps.
+        </p>
+        <p>
+          <strong>Lesson 19:</strong> Flask REST API with Authentication & JWT
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

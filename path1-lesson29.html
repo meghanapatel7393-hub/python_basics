@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path 1 – Lesson 29 | Error Handling & Exceptions</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .warning {
+        background: #fff7ed;
+        padding: 12px;
+        border-left: 5px solid #ea580c;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+      th,
+      td {
+        border: 1px solid #d1d5db;
+        padding: 10px;
+      }
+      th {
+        background-color: #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 1: Python Interview Preparation</h1>
+      <h2>Phase 4 – Robust & Safe Code</h2>
+      <h3>Lesson 29: Error Handling & Custom Exceptions</h3>
+
+      <div class="section">
+        <h2>1. What is an Error?</h2>
+        <p>
+          An error is a problem that occurs during program execution and stops
+          normal flow.
+        </p>
+
+        <div class="note">
+          Errors are also called <strong>exceptions</strong> in Python.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. Common Python Errors</h2>
+
+        <table>
+          <tr>
+            <th>Error</th>
+            <th>Reason</th>
+          </tr>
+          <tr>
+            <td>ZeroDivisionError</td>
+            <td>Dividing by zero</td>
+          </tr>
+          <tr>
+            <td>TypeError</td>
+            <td>Wrong data type</td>
+          </tr>
+          <tr>
+            <td>ValueError</td>
+            <td>Invalid value</td>
+          </tr>
+          <tr>
+            <td>IndexError</td>
+            <td>Invalid index</td>
+          </tr>
+          <tr>
+            <td>KeyError</td>
+            <td>Missing dictionary key</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>3. Why Handle Errors?</h2>
+        <ul>
+          <li>Prevent program crash</li>
+          <li>Show user-friendly messages</li>
+          <li>Improve application reliability</li>
+          <li>Important for production systems</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>4. try / except</h2>
+
+        <div class="code">
+          try:<br />
+          &nbsp;&nbsp;x = 10 / 0<br />
+          except ZeroDivisionError:<br />
+          &nbsp;&nbsp;print("Cannot divide by zero")
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. Handling Multiple Exceptions</h2>
+
+        <div class="code">
+          try:<br />
+          &nbsp;&nbsp;a = int("abc")<br />
+          except ValueError:<br />
+          &nbsp;&nbsp;print("Invalid number")<br />
+          except TypeError:<br />
+          &nbsp;&nbsp;print("Wrong type")
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>6. else Block</h2>
+        <p>Executes when no exception occurs.</p>
+
+        <div class="code">
+          try:<br />
+          &nbsp;&nbsp;x = 10 / 2<br />
+          except ZeroDivisionError:<br />
+          &nbsp;&nbsp;print("Error")<br />
+          else:<br />
+          &nbsp;&nbsp;print("Success")
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>7. finally Block</h2>
+        <p>Always executes (used for cleanup).</p>
+
+        <div class="code">
+          try:<br />
+          &nbsp;&nbsp;file = open("data.txt")<br />
+          except FileNotFoundError:<br />
+          &nbsp;&nbsp;print("File not found")<br />
+          finally:<br />
+          &nbsp;&nbsp;print("Closing resources")
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>8. Raising Exceptions</h2>
+
+        <div class="code">
+          age = -5<br />
+          if age < 0:<br />
+          &nbsp;&nbsp;raise ValueError("Age cannot be negative")
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>9. Custom Exceptions</h2>
+        <p>You can create your own exceptions for business logic.</p>
+
+        <div class="code">
+          class InvalidAgeError(Exception):<br />
+          &nbsp;&nbsp;pass<br /><br />
+          def check_age(age):<br />
+          &nbsp;&nbsp;if age < 18:<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;raise InvalidAgeError("Not eligible")<br />
+          &nbsp;&nbsp;return "Eligible"
+        </div>
+
+        <div class="note">Custom exceptions improve code clarity.</div>
+      </div>
+
+      <div class="section">
+        <h2>10. Best Practices</h2>
+        <ul>
+          <li>Catch specific exceptions</li>
+          <li>Avoid empty except blocks</li>
+          <li>Use logging instead of print</li>
+          <li>Use custom exceptions for business rules</li>
+        </ul>
+
+        <div class="warning">Never hide errors silently.</div>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Handle division by zero</li>
+          <li>Create a custom exception</li>
+          <li>Use try-except-finally</li>
+          <li>Explain error handling in interview</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Python uses try-except blocks for error handling, and custom
+          exceptions help manage business logic clearly.
+        </p>
+        <p>
+          <strong>Lesson 30:</strong> Python Performance Optimization &
+          Profiling
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

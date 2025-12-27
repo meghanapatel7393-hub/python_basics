@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PATH 2 – Lesson 20 | Flask REST API Role-Based Access</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 2: Django / Flask / FastAPI</h1>
+      <h2>Phase 4 – Flask REST API</h2>
+      <h3>Lesson 20: Flask REST API with Role-Based Access Control</h3>
+
+      <div class="section">
+        <h2>1. What is Role-Based Access Control (RBAC)?</h2>
+        <p>
+          RBAC allows restricting access to certain API endpoints based on user
+          roles such as <code>admin</code>, <code>editor</code>, or
+          <code>user</code>.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>2. Adding Role to User Model</h2>
+
+        <div class="code">
+          class User(db.Model):<br />
+          &nbsp;&nbsp;id = db.Column(db.Integer, primary_key=True)<br />
+          &nbsp;&nbsp;username = db.Column(db.String(80), unique=True,
+          nullable=False)<br />
+          &nbsp;&nbsp;password = db.Column(db.String(200), nullable=False)<br />
+          &nbsp;&nbsp;role = db.Column(db.String(20), nullable=False,
+          default="user")
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. Decorator for Role Checking</h2>
+
+        <div class="code">
+          from functools import wraps<br />
+          from flask_jwt_extended import get_jwt_identity, jwt_required<br /><br />
+          def role_required(required_role):<br />
+          &nbsp;&nbsp;def decorator(func):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;@wraps(func)<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;@jwt_required()<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;def wrapper(*args, **kwargs):<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user_id = get_jwt_identity()<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user = User.query.get(user_id)<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if user.role != required_role:<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return {"error":
+          "Access forbidden"}, 403<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return func(*args, **kwargs)<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return wrapper<br />
+          &nbsp;&nbsp;return decorator
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. Example Protected Endpoint</h2>
+
+        <div class="code">
+          @app.route("/admin-only")<br />
+          @role_required("admin")<br />
+          def admin_only():<br />
+          &nbsp;&nbsp;return {"message": "Welcome Admin!"}
+        </div>
+
+        <div class="note">
+          Only users with role <code>admin</code> can access this route.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. Notes & Best Practices</h2>
+        <ul>
+          <li>Assign roles at user registration or via admin panel</li>
+          <li>Use JWT identity to fetch user role</li>
+          <li>
+            Combine RBAC with endpoint-specific checks for better security
+          </li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Create admin and regular user accounts</li>
+          <li>
+            Protect sensitive endpoints with
+            <code>role_required</code> decorator
+          </li>
+          <li>Test access with different roles using Postman</li>
+          <li>Optional: Implement multiple roles for a single user</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Flask RBAC secures API endpoints by checking user roles in JWT,
+          preventing unauthorized access to sensitive routes.
+        </p>
+        <p><strong>Lesson 21:</strong> Flask REST API Pagination & Filtering</p>
+      </div>
+    </div>
+  </body>
+</html>
