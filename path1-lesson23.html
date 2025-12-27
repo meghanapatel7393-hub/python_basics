@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path 1 – Lesson 23 | Multithreading & Multiprocessing</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .warning {
+        background: #fff7ed;
+        padding: 12px;
+        border-left: 5px solid #ea580c;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+        overflow-x: auto;
+      }
+      ul,
+      ol {
+        margin-left: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #d1d5db;
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background-color: #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 1: Python Interview Preparation</h1>
+      <h2>Phase 3 – Performance & Concurrency</h2>
+      <h3>Lesson 23: Multithreading & Multiprocessing</h3>
+
+      <div class="section">
+        <h2>1. Why Concurrency?</h2>
+        <p>
+          Concurrency helps programs perform multiple tasks efficiently by
+          overlapping execution.
+        </p>
+
+        <ul>
+          <li>Improve performance</li>
+          <li>Handle multiple tasks simultaneously</li>
+          <li>Better resource utilization</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>2. Multithreading</h2>
+        <p>
+          Multithreading allows multiple threads to run within the same process.
+          Best suited for <strong>I/O-bound tasks</strong>.
+        </p>
+
+        <div class="code">
+          import threading<br /><br />
+          def task():<br />
+          &nbsp;&nbsp;print("Task running")<br /><br />
+          t = threading.Thread(target=task)<br />
+          t.start()<br />
+          t.join()
+        </div>
+
+        <div class="note">Threads share memory and resources.</div>
+      </div>
+
+      <div class="section">
+        <h2>3. Global Interpreter Lock (GIL)</h2>
+        <p>GIL allows only one thread to execute Python bytecode at a time.</p>
+
+        <div class="warning">
+          Multithreading does NOT improve performance for CPU-bound tasks in
+          Python.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. Multiprocessing</h2>
+        <p>
+          Multiprocessing runs tasks in separate processes, bypassing the GIL.
+          Best for <strong>CPU-bound tasks</strong>.
+        </p>
+
+        <div class="code">
+          from multiprocessing import Process<br /><br />
+          def task():<br />
+          &nbsp;&nbsp;print("Process running")<br /><br />
+          p = Process(target=task)<br />
+          p.start()<br />
+          p.join()
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. Thread vs Process</h2>
+
+        <table>
+          <tr>
+            <th>Thread</th>
+            <th>Process</th>
+          </tr>
+          <tr>
+            <td>Shared memory</td>
+            <td>Separate memory</td>
+          </tr>
+          <tr>
+            <td>Lightweight</td>
+            <td>Heavyweight</td>
+          </tr>
+          <tr>
+            <td>I/O-bound tasks</td>
+            <td>CPU-bound tasks</td>
+          </tr>
+          <tr>
+            <td>Affected by GIL</td>
+            <td>Not affected by GIL</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>6. Thread Synchronization (Lock)</h2>
+
+        <div class="code">
+          import threading<br /><br />
+          lock = threading.Lock()<br /><br />
+          def task():<br />
+          &nbsp;&nbsp;with lock:<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;print("Critical section")<br /><br />
+          t1 = threading.Thread(target=task)<br />
+          t2 = threading.Thread(target=task)<br />
+          t1.start()<br />
+          t2.start()
+        </div>
+
+        <div class="note">Locks prevent race conditions.</div>
+      </div>
+
+      <div class="section">
+        <h2>7. Real-World Use Cases</h2>
+
+        <ul>
+          <li>Web scraping</li>
+          <li>File downloading</li>
+          <li>Parallel data processing</li>
+          <li>Background tasks</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>8. Interview Questions</h2>
+        <ul>
+          <li>Difference between thread and process?</li>
+          <li>What is GIL?</li>
+          <li>When to use multiprocessing?</li>
+          <li>How to avoid race conditions?</li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Create 3 threads running different functions</li>
+          <li>Create 2 processes performing CPU-heavy calculations</li>
+          <li>Demonstrate race condition and fix it with lock</li>
+          <li>Explain GIL with example</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Use multithreading for I/O-bound tasks and multiprocessing for
+          CPU-bound tasks to bypass Python’s GIL
+        </p>
+        <p><strong>Lesson 24:</strong> Async Programming (async / await)</p>
+      </div>
+    </div>
+  </body>
+</html>

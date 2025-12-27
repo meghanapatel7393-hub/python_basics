@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path 1 – Lesson 24 | Async & Await</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1e40af;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+      .section {
+        background: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .note {
+        background: #e0f2fe;
+        padding: 12px;
+        border-left: 5px solid #0284c7;
+        margin: 15px 0;
+      }
+      .warning {
+        background: #fff7ed;
+        padding: 12px;
+        border-left: 5px solid #ea580c;
+        margin: 15px 0;
+      }
+      .task {
+        background: #ecfdf5;
+        padding: 12px;
+        border-left: 5px solid #059669;
+        margin: 15px 0;
+      }
+      .code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+        overflow-x: auto;
+      }
+      ul,
+      ol {
+        margin-left: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #d1d5db;
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background-color: #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PATH 1: Python Interview Preparation</h1>
+      <h2>Phase 3 – Performance & Concurrency</h2>
+      <h3>Lesson 24: Asynchronous Programming (async / await)</h3>
+
+      <div class="section">
+        <h2>1. What is Asynchronous Programming?</h2>
+        <p>
+          Asynchronous programming allows a program to perform other tasks while
+          waiting for long-running operations like network calls or file I/O.
+        </p>
+
+        <div class="note">
+          Async programming is best for <strong>I/O-bound</strong> tasks.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. Synchronous vs Asynchronous</h2>
+
+        <table>
+          <tr>
+            <th>Synchronous</th>
+            <th>Asynchronous</th>
+          </tr>
+          <tr>
+            <td>Blocking</td>
+            <td>Non-blocking</td>
+          </tr>
+          <tr>
+            <td>Waits for task to finish</td>
+            <td>Runs other tasks while waiting</td>
+          </tr>
+          <tr>
+            <td>Slower for I/O</td>
+            <td>Faster for I/O</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>3. async and await Keywords</h2>
+
+        <ul>
+          <li><code>async</code> defines a coroutine function</li>
+          <li><code>await</code> pauses execution until task completes</li>
+        </ul>
+
+        <div class="code">
+          import asyncio<br /><br />
+          async def say_hello():<br />
+          &nbsp;&nbsp;print("Hello")<br /><br />
+          asyncio.run(say_hello())
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. Example: Async with Delay</h2>
+
+        <div class="code">
+          import asyncio<br /><br />
+          async def task():<br />
+          &nbsp;&nbsp;print("Start")<br />
+          &nbsp;&nbsp;await asyncio.sleep(2)<br />
+          &nbsp;&nbsp;print("End")<br /><br />
+          asyncio.run(task())
+        </div>
+
+        <div class="note">
+          <code>await asyncio.sleep()</code> is non-blocking.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. Running Multiple Async Tasks</h2>
+
+        <div class="code">
+          import asyncio<br /><br />
+          async def task(name):<br />
+          &nbsp;&nbsp;print(f"Start {name}")<br />
+          &nbsp;&nbsp;await asyncio.sleep(2)<br />
+          &nbsp;&nbsp;print(f"End {name}")<br /><br />
+          async def main():<br />
+          &nbsp;&nbsp;await asyncio.gather(task("A"), task("B"))<br /><br />
+          asyncio.run(main())
+        </div>
+
+        <div class="note">Tasks run concurrently, not sequentially.</div>
+      </div>
+
+      <div class="section">
+        <h2>6. Async vs Threading vs Multiprocessing</h2>
+
+        <table>
+          <tr>
+            <th>Async</th>
+            <th>Threading</th>
+            <th>Multiprocessing</th>
+          </tr>
+          <tr>
+            <td>Single thread</td>
+            <td>Multiple threads</td>
+            <td>Multiple processes</td>
+          </tr>
+          <tr>
+            <td>I/O-bound</td>
+            <td>I/O-bound</td>
+            <td>CPU-bound</td>
+          </tr>
+          <tr>
+            <td>No GIL issues</td>
+            <td>GIL affected</td>
+            <td>No GIL</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>7. Real-World Use Cases</h2>
+
+        <ul>
+          <li>Web APIs (FastAPI, aiohttp)</li>
+          <li>Web scraping</li>
+          <li>Chat applications</li>
+          <li>High-performance servers</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>8. Common Mistakes</h2>
+        <ul>
+          <li>Using blocking code inside async functions</li>
+          <li>Forgetting <code>await</code></li>
+          <li>Calling async function without event loop</li>
+        </ul>
+
+        <div class="warning">
+          Never use blocking functions like <code>time.sleep()</code> inside
+          async code.
+        </div>
+      </div>
+
+      <div class="task">
+        <h2>Practice Tasks</h2>
+        <ol>
+          <li>Create two async tasks running concurrently</li>
+          <li>Convert a blocking program into async</li>
+          <li>Explain async vs threading in interview</li>
+          <li>Use asyncio.gather()</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>Next Lesson</h2>
+        <p>
+          Async programming allows non-blocking execution using async and await,
+          making Python applications fast and scalable for I/O-bound tasks.
+        </p>
+        <p><strong>Lesson 25:</strong> Python Testing – unittest & pytest</p>
+      </div>
+    </div>
+  </body>
+</html>
